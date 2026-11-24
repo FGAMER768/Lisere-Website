@@ -149,9 +149,12 @@ Après un changement de domaine ou d’image sociale :
 
 Le build génère :
 
-- `dist/sitemap-index.xml` : l’index à déclarer ;
+- `dist/sitemap.xml` : le sitemap unique à déclarer ;
+- `dist/sitemap-index.xml` : l’index généré par Astro (solution de secours) ;
 - `dist/sitemap-0.xml` : les URL détaillées ;
 - `dist/robots.txt` : la directive `Sitemap:`.
+
+Sur `*.pages.dev`, Google Search Console peut afficher « Impossible de récupérer le sitemap » même quand l’URL répond en 200 : c’est un comportement connu de Cloudflare sur le domaine partagé. Le sitemap unique évite l’étape supplémentaire de l’index ; pour une récupération fiable sur le long terme, utilisez un domaine personnalisé.
 
 La page 404 est exclue de la sitemap. Les priorités sont définies dans `astro.config.mjs`.
 
@@ -163,10 +166,10 @@ Après le déploiement :
 2. Dans **Indexation > Sitemaps**, soumettez exactement :
 
    ```text
-   https://<votre-domaine>/sitemap-index.xml
+   https://<votre-domaine>/sitemap.xml
    ```
 
-   Ne soumettez pas `sitemap-0.xml` : l’index le référence déjà.
+   Ne soumettez pas `sitemap-0.xml` : le sitemap unique contient déjà les URL. Si Search Console refuse encore `sitemap.xml`, essayez l’index `sitemap-index.xml` ; les deux fichiers sont générés.
 3. Vérifiez que `https://<votre-domaine>/robots.txt` répond et contient la même URL de sitemap.
 4. Après un changement de domaine, reconstruisez avec le nouveau `SITE_URL`, redéployez, puis soumettez la nouvelle sitemap. Les anciennes URL canoniques ne doivent plus être conservées.
 
