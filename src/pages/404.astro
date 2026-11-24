@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ButtonLink from '../components/ButtonLink.astro';
+import '../styles/pages/404.css';
+---
+
+<BaseLayout
+  title="Page introuvable, Liseré"
+  description="Cette page n’existe pas ou a été déplacée. Revenez à l’accueil, aux fonctionnalités ou au téléchargement de Liseré."
+  noindex
+>
+  <section class="not-found" data-enter>
+    <div class="container">
+      <div class="not-found__copy">
+        <h1>Page introuvable</h1>
+        <p>
+          Erreur 404. Le lien est peut-être ancien, ou l’adresse contient une
+          faute. Le reste du site est toujours là.
+        </p>
+        <div class="not-found__actions">
+          <ButtonLink href="/" icon="arrow-right">Revenir à l’accueil</ButtonLink>
+          <ButtonLink href="/telecharger/" variant="secondary" icon="download">
+            Télécharger Liseré
+          </ButtonLink>
+        </div>
+        <nav class="not-found__links" aria-label="Pages principales">
+          <a href="/fonctionnalites/">Fonctionnalités</a>
+          <a href="/galerie/">Galerie</a>
+          <a href="/code-source/">Code source</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

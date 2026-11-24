@@ -1,0 +1,117 @@
+---
+import '@fontsource-variable/inter/opsz.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/layout.css';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { site } from '../data/site';
+
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  image = site.defaultImage,
+  imageAlt = 'Liseré, amélioration locale de photos et de vidéos sur Windows',
+  type = 'website',
+  noindex = false,
+  schema,
+} = Astro.props;
+
+const configuredSite = Astro.site ?? new URL('https://lisere.pages.dev');
+const canonical = new URL(Astro.url.pathname, configuredSite);
+const imageUrl = new URL(image, configuredSite);
+const pageSchemas = (Array.isArray(schema) ? schema : schema ? [schema] : []).map(
+  ({ '@context': _context, ...rest }) => rest,
+);
+
+const graph = [
+  {
+    '@type': 'WebSite',
+    '@id': `${configuredSite.origin}/#website`,
+    name: site.name,
+    url: configuredSite.href,
+    description: site.description,
+    inLanguage: 'fr-FR',
+    publisher: {
+      '@type': 'Person',
+      name: site.author,
+    },
+  },
+  ...pageSchemas,
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': graph,
+};
+---
+
+<!doctype html>
+<html lang="fr" data-type="software">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="page-type" content="software" />
+    <meta name="site-kind" content="software" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="author" content={site.author} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f4f3f1" />
+    <meta name="color-scheme" content="light" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/brand/lisere-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <SiteHeader />
+    <main id="contenu" class="site-main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+
+    <script>
+      import '../scripts/compare';
+      import '../scripts/copy';
+      import '../scripts/nav';
+    </script>
+  </body>
+</html>

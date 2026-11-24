@@ -1,0 +1,17 @@
+---
+import './StatusNote.css';
+
+interface Props {
+  label?: string;
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { label, tone = 'light', class: className } = Astro.props;
+---
+
+<p class:list={['status-note', `status-note--${tone}`, className]}>
+  {label && <strong>{label}</strong>}
+  {' '}
+  <slot />
+</p>

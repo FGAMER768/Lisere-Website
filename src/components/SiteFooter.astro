@@ -1,0 +1,66 @@
+---
+import { footerGroups, release, site } from '../data/site';
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import './SiteFooter.css';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <Wordmark tone="dark" />
+        <p class="site-footer__tagline">
+          Amélioration locale de photos et vidéos pour Windows.
+        </p>
+        <p class="site-footer__status mono">
+          Version {release.version} · développement en pause
+        </p>
+        <p class="site-footer__type">
+          Composé avec <a href="https://rsms.me/inter/">Inter</a>
+          (The Inter Project Authors) et <a href="https://www.ibm.com/plex/">IBM Plex Mono</a>
+          (IBM), sous licence SIL OFL 1.1.
+        </p>
+      </div>
+
+      <div class="site-footer__groups">
+        {
+          footerGroups.map((group) => (
+            <div class="site-footer__group">
+              <h2 class="site-footer__group-title">{group.title}</h2>
+              <ul class="site-footer__links">
+                {group.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      target={'external' in link && link.external ? '_blank' : undefined}
+                      rel={'external' in link && link.external ? 'noopener noreferrer' : undefined}
+                    >
+                      {link.label}
+                      {'external' in link && link.external && (
+                        <span class="visually-hidden"> (nouvelle fenêtre)</span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>© 2026 {site.author}. Liseré est un projet indépendant.</p>
+      <p class="site-footer__fineprint">
+        Aucun cookie, aucun traqueur. Les modèles, FFmpeg et noms cités gardent
+        leurs licences et appartiennent à leurs détenteurs.
+      </p>
+      <a class="site-footer__github" href={site.github} target="_blank" rel="noopener noreferrer">
+        <Icon name="github" size={18} />
+        Voir le dépôt
+        <span class="visually-hidden">(nouvelle fenêtre)</span>
+      </a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import './Breadcrumbs.css';
+
+export type BreadcrumbItem = {
+  label: string;
+  href?: string;
+};
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Fil d’Ariane">
+  <ol class="breadcrumbs__list">
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        return (
+          <li class="breadcrumbs__item">
+            {item.href && !isLast ? (
+              <a class="breadcrumbs__link" href={item.href}>{item.label}</a>
+            ) : (
+              <span class="breadcrumbs__current" aria-current={isLast ? 'page' : undefined}>
+                {item.label}
+              </span>
+            )}
+            {!isLast && <Icon name="chevron-down" size={12} class="breadcrumbs__separator" />}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

@@ -1,0 +1,77 @@
+.local-diagram {
+  margin: 0;
+}
+
+.local-diagram__flow {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.local-diagram__node {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.2rem 0.8rem;
+  padding: 1rem;
+  border: 1px solid var(--night-line);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--night-text);
+}
+
+.local-diagram__node .icon {
+  grid-row: 1 / 3;
+  color: var(--night-muted);
+}
+
+.local-diagram__node span {
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.local-diagram__node small {
+  color: var(--night-muted);
+  font-size: 0.75rem;
+}
+
+.local-diagram__node--core {
+  border-color: rgba(134, 217, 212, 0.55);
+  background: rgba(134, 217, 212, 0.07);
+}
+
+.local-diagram__node--core .icon {
+  color: var(--accent-bright);
+}
+
+.local-diagram__connector {
+  width: 1px;
+  height: 1rem;
+  margin-inline: auto;
+  background: var(--night-line);
+}
+
+.local-diagram__caption {
+  max-width: 55ch;
+  margin-top: 1.75rem;
+  color: var(--night-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+@media (min-width: 1280px) {
+  .local-diagram__flow {
+    grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr) 3rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0;
+  }
+
+  .local-diagram__node {
+    min-height: 116px;
+    align-content: center;
+  }
+
+  .local-diagram__connector {
+    width: 100%;
+    height: 1px;
+  }
+}

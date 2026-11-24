@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ButtonLink from '../../components/ButtonLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import { architecture, testTotals } from '../../data/features';
+import { site } from '../../data/site';
+import '../../styles/pages/code-source.css';
+
+const breadcrumbs = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Code source' },
+];
+
+const base = Astro.site ?? new URL('https://lisere.pages.dev');
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, base).href } : {}),
+  })),
+};
+
+const sourceSchema = {
+  '@type': 'SoftwareSourceCode',
+  name: 'Liseré',
+  codeRepository: site.github,
+  programmingLanguage: ['C#', 'XAML'],
+  runtimePlatform: '.NET 10, Windows 10, Windows 11',
+  description:
+    'Application WPF d’amélioration locale de photos et de vidéos, avec moteurs ONNX, FFmpeg, RIFE et YuNet.',
+  author: {
+    '@type': 'Person',
+    name: site.author,
+  },
+};
+
+const commands = `dotnet restore Lisere.slnx
+dotnet run --project src/Lisere
+dotnet build Lisere.slnx
+dotnet test Lisere.slnx`;
+
+const tree = `Lisere.slnx
+src/               application, Core, Ai, Video, Setup
+tests/             Core, Ai, Video, App
+models/            catalogue et poids ONNX
+ffmpeg/            manifeste et licences
+scripts/           publication et installateur
+Update/            version.txt et paquets`;
+---
+
+<BaseLayout
+  title="Liseré : code source, architecture et tests"
+  description="Explorez le dépôt public de Liseré : architecture WPF et .NET, moteurs ONNX, FFmpeg, 486 tests, commandes de build et licences des composants."
+  schema={[breadcrumbSchema, sourceSchema]}
+>
+  <PageHero
+    title="Code source et architecture"
+    lead="Le dépôt est public. L’architecture sépare l’interface, le pipeline image, les moteurs et le rendu vidéo, avec quatre projets de tests."
+    breadcrumbs={breadcrumbs}
+  >
+    <ButtonLink href={site.github} icon="github" external>Ouvrir le dépôt GitHub</ButtonLink>
+    <ButtonLink href={site.guide} variant="secondary" icon="external" external>
+      Lire le guide
+    </ButtonLink>
+  </PageHero>
+
+  <div class="container">
+    <ul class="source-metrics" aria-label="Chiffres du dépôt">
+      {testTotals.map((total) => (
+        <li class="source-metric">
+          <strong>{total.value}</strong>
+          <span>{total.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="container source-content">
+    <div class="source-content__main">
+      <SectionHeader
+        title="Une architecture par domaine"
+        intro="Chaque projet a une responsabilité lisible. L’interface ne sait pas quel moteur tourne, et la vidéo ne dépend pas des détails du pipeline image."
+      />
+
+      <div class="source-architecture">
+        {architecture.map((project) => (
+          <div class="source-architecture__item">
+            <h3>{project.name}</h3>
+            <p>{project.role}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="source-aside-block">
+        <h2>Construire localement</h2>
+        <p>
+          Il faut Windows 10 ou 11 et le SDK .NET 10. FFmpeg est fourni dans les
+          publications ; sur un checkout neuf, lancez
+          <code>scripts/fetch-ffmpeg.ps1</code> pour les tests vidéo.
+        </p>
+        <div class="source-panel" aria-label="Commandes de build">
+          <div class="source-panel__bar">
+            <span>PowerShell</span>
+            <span>dépôt local</span>
+          </div>
+          <pre><code>{commands}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <aside class="source-content__aside">
+      <div class="source-aside-block">
+        <h2>Structure du dépôt</h2>
+        <div class="source-panel">
+          <div class="source-panel__bar">
+            <span>Lisere.slnx</span>
+            <span>vue d’ensemble</span>
+          </div>
+          <pre><code>{tree}</code></pre>
+        </div>
+      </div>
+
+      <div class="source-aside-block">
+        <h2>Tests</h2>
+        <p>
+          La suite compte 486 tests : 125 Core, 27 Ai, 57 Vidéo et 277 App. Les
+          tests vidéo génèrent un clip avec FFmpeg et vérifient le rendu, l’audio,
+          le désentrelacement, la taille, l’annulation et l’extraction d’aperçu.
+        </p>
+        <p>
+          RIFE est testé en inférence réelle, en rendu simulé puis en rendu réel
+          à 10 → 20 i/s. Les tests sont ignorés si FFmpeg est introuvable.
+        </p>
+      </div>
+
+      <div class="source-aside-block">
+        <h2>Signaler un problème</h2>
+        <p>
+          Le développement est en pause. Les issues restent ouvertes, mais les
+          réponses peuvent prendre du temps. Pour un bug de rendu, joignez la
+          version, le moteur, le format et les réglages.
+        </p>
+        <div class="source-links">
+          <a href={site.issues}>Issues GitHub</a>
+          <a href={site.releases}>Releases</a>
+          <a href={site.readme}>README</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="source-license" aria-labelledby="licences-titre">
+    <div class="container source-license__grid">
+      <div>
+        <SectionHeader
+          id="licences-titre"
+          title="Ce que le dépôt contient, et sous quelles licences"
+          intro="Le code est public, mais toutes les parties ne sont pas sous la même licence. Les modèles, FFmpeg et les bibliothèques gardent leurs conditions d’origine."
+        />
+      </div>
+      <div>
+        <p>
+          Aucune licence globale n’est déclarée à ce jour. Si vous comptez réutiliser
+          ou redistribuer le code, vérifiez d’abord les licences des composants
+          tiers et ajoutez une licence explicite au dépôt.
+        </p>
+        <p>
+          Les presets Ultron CC, Matrix CC, Infinity CC, Nebulus CC et Splendida CC
+          font référence à des presets After Effects analysés. Aucun fichier
+          propriétaire n’est distribué. Topaz et After Effects appartiennent à
+          leurs détenteurs.
+        </p>
+        <div class="source-links">
+          <a href={site.github}>Code source</a>
+          <a href={site.releases}>Assets et empreintes</a>
+          <a href={site.guide}>Guide complet</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Lire le code fait partie du produit"
+    lead="Vous pouvez vérifier l’architecture, les tests et les empreintes avant de télécharger l’application."
+  >
+    <ButtonLink href={site.github} icon="github" external>Ouvrir GitHub</ButtonLink>
+    <ButtonLink href="/telecharger/" variant="secondary" icon="download">
+      Télécharger Liseré
+    </ButtonLink>
+  </CtaBand>
+</BaseLayout>

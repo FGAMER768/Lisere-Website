@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import './FeatureRow.css';
+
+interface Props {
+  title: string;
+  body: string;
+  points?: readonly string[];
+  reverse?: boolean;
+  id?: string;
+  class?: string;
+}
+
+const {
+  title,
+  body,
+  points = [],
+  reverse = false,
+  id,
+  class: className,
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={['feature-row', reverse && 'feature-row--reverse', className]}
+>
+  <div class="feature-row__copy">
+    <h3 class="feature-row__title">{title}</h3>
+    <p class="feature-row__body">{body}</p>
+    {
+      points.length > 0 && (
+        <ul class="feature-row__points">
+          {points.map((point) => (
+            <li>
+              <Icon name="check" size={16} />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+  <div class="feature-row__visual">
+    <slot />
+  </div>
+</section>

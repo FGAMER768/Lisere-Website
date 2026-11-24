@@ -1,0 +1,30 @@
+---
+import './FaqList.css';
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+interface Props {
+  items: readonly FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq-list">
+  {
+    items.map((item) => (
+      <details class="faq-list__item">
+        <summary>
+          <span>{item.question}</span>
+          <span class="faq-list__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-list__body">
+          <p>{item.answer}</p>
+        </div>
+      </details>
+    ))
+  }
+</div>

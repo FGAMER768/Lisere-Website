@@ -1,0 +1,38 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import './FilmStrip.css';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+}
+
+const { image, alt } = Astro.props;
+const positions = [0, 18, 38, 58, 78, 100];
+const timecodes = ['00:00', '00:04', '00:08', '00:12', '00:16', '00:20'];
+---
+
+<figure class="film-strip">
+  <div class="film-strip__viewport">
+    <div class="film-strip__track">
+      {
+        positions.map((position, index) => (
+          <div class="film-strip__frame">
+            <Image
+              src={image}
+              alt={index === 0 ? alt : ''}
+              widths={[320, 480]}
+              sizes="(min-width: 900px) 16vw, 190px"
+              loading="eager"
+              decoding="async"
+              style={`object-position:${position}% center`}
+            />
+            <span class="film-strip__time">{timecodes[index]}</span>
+          </div>
+        ))
+      }
+      <span class="film-strip__playhead" aria-hidden="true"></span>
+    </div>
+  </div>
+</figure>

@@ -1,0 +1,53 @@
+.figure-frame {
+  margin: 0;
+}
+
+.figure-frame__media {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xs);
+  background: var(--paper-deep);
+}
+
+.figure-frame__media::after {
+  position: absolute;
+  inset: 12px;
+  background:
+    linear-gradient(var(--paper), var(--paper)) left top / 16px 1px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) left top / 1px 16px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) right top / 16px 1px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) right top / 1px 16px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) left bottom / 16px 1px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) left bottom / 1px 16px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) right bottom / 16px 1px no-repeat,
+    linear-gradient(var(--paper), var(--paper)) right bottom / 1px 16px no-repeat;
+  content: "";
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.figure-frame__media img {
+  width: 100%;
+  height: auto;
+}
+
+.figure-frame__caption {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 0.8rem;
+}
+
+.figure-frame__description {
+  max-width: 68ch;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.figure-frame__credit {
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+}

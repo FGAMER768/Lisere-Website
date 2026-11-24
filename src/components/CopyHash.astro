@@ -1,0 +1,20 @@
+---
+import './CopyHash.css';
+
+interface Props {
+  hash: string;
+  label?: string;
+}
+
+const { hash, label = 'Empreinte SHA-256' } = Astro.props;
+---
+
+<div class="copy-hash" data-copy-hash>
+  <span class="copy-hash__label">{label}</span>
+  <code class="copy-hash__value">{hash}</code>
+  <button class="copy-hash__button" type="button" data-copy-value={hash}>
+    <span data-copy-label>Copier</span>
+    <span class="visually-hidden"> l’empreinte</span>
+  </button>
+  <span class="visually-hidden" role="status" aria-live="polite" data-copy-status></span>
+</div>

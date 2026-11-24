@@ -1,0 +1,37 @@
+---
+import type { IconName } from '../lib/icon-names';
+import Icon from './Icon.astro';
+import './ButtonLink.css';
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'quiet';
+  size?: 'default' | 'small';
+  icon?: IconName;
+  external?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'default',
+  icon,
+  external = false,
+  class: className,
+} = Astro.props;
+
+const target = external ? '_blank' : undefined;
+const rel = external ? 'noopener noreferrer' : undefined;
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class:list={['button', `button--${variant}`, size === 'small' && 'button--small', className]}
+>
+  {icon && <Icon name={icon} size={18} />}
+  <span><slot /></span>
+  {external && <span class="visually-hidden"> (nouvelle fenêtre)</span>}
+</a>

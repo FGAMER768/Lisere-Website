@@ -1,0 +1,32 @@
+---
+import './FigureFrame.css';
+
+interface Props {
+  caption?: string;
+  credit?: string;
+  creditHref?: string;
+  class?: string;
+}
+
+const { caption, credit, creditHref, class: className } = Astro.props;
+---
+
+<figure class:list={['figure-frame', className]}>
+  <div class="figure-frame__media">
+    <slot />
+  </div>
+  {(caption || credit) && (
+    <figcaption class="figure-frame__caption">
+      {caption && <p class="figure-frame__description">{caption}</p>}
+      {credit && (
+        <p class="figure-frame__credit">
+          {creditHref ? (
+            <a href={creditHref} rel="noopener noreferrer">{credit}</a>
+          ) : (
+            credit
+          )}
+        </p>
+      )}
+    </figcaption>
+  )}
+</figure>

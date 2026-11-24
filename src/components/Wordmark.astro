@@ -1,0 +1,26 @@
+---
+import './Wordmark.css';
+
+interface Props {
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { tone = 'light', class: className } = Astro.props;
+---
+
+<a
+  href="/"
+  class:list={['wordmark', `wordmark--${tone}`, className]}
+  aria-label="Liseré, retour à l’accueil"
+>
+  <img
+    class="wordmark__icon"
+    src="/brand/lisere-icon-ui.png"
+    width="36"
+    height="36"
+    alt=""
+    decoding="async"
+  />
+  <span class="wordmark__name">Liseré</span>
+</a>

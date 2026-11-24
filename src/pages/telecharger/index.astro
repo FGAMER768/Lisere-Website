@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ButtonLink from '../../components/ButtonLink.astro';
+import DownloadTicket from '../../components/DownloadTicket.astro';
+import FaqList from '../../components/FaqList.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import SpecTable from '../../components/SpecTable.astro';
+import StatusNote from '../../components/StatusNote.astro';
+import { faqs } from '../../data/faqs';
+import { formats } from '../../data/features';
+import { release, site } from '../../data/site';
+import '../../styles/pages/telecharger.css';
+
+const breadcrumbs = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Télécharger' },
+];
+
+const base = Astro.site ?? new URL('https://lisere.pages.dev');
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, base).href } : {}),
+  })),
+};
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+
+const softwareSchema = {
+  '@type': 'SoftwareApplication',
+  name: 'Liseré',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Windows 10, Windows 11',
+  softwareVersion: release.version,
+  url: new URL('/telecharger/', base).href,
+  downloadUrl: site.latestRelease,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'EUR',
+  },
+  author: {
+    '@type': 'Person',
+    name: site.author,
+  },
+};
+
+const formatRows = formats.map((row) => ({ label: row.label, value: row.value }));
+---
+
+<BaseLayout
+  title={`Télécharger Liseré ${release.version} pour Windows`}
+  description={`Téléchargez Liseré ${release.version} pour Windows 10 et 11. Installateur par utilisateur, empreinte SHA-256 et mise à jour depuis GitHub.`}
+  schema={[breadcrumbSchema, faqSchema, softwareSchema]}
+>
+  <PageHero
+    title="Télécharger Liseré pour Windows"
+    lead="Un installateur, une empreinte SHA-256, une installation dans votre profil Windows. Liseré garde vos réglages lors d’une désinstallation."
+    breadcrumbs={breadcrumbs}
+  >
+    <ButtonLink href={site.installer} icon="download" external>
+      Télécharger l’installateur
+    </ButtonLink>
+    <ButtonLink href={site.releases} variant="secondary" icon="external" external>
+      Voir les releases
+    </ButtonLink>
+  </PageHero>
+
+  <section class="download-ticket-wrap" aria-label="Version à télécharger">
+    <div class="container">
+      <DownloadTicket />
+      <StatusNote label="Développement en pause" class="download-status">
+        La version {release.version} reste téléchargeable. Les essais 4K sont
+        suspendus faute de GPU exploitable, et aucune amélioration de performance
+        n’est promise dans l’immédiat.
+      </StatusNote>
+    </div>
+  </section>
+
+  <section class="container download-content" aria-label="Installation et vérifications">
+    <div class="download-content__main">
+      <SectionHeader
+        title="L’installation"
+        intro="L’installateur contient l’application autonome, FFmpeg et les modèles. Aucun téléchargement supplémentaire n’est nécessaire après le lancement."
+      />
+
+      <div class="download-steps">
+        <div class="download-step">
+          <span class="download-step__icon">
+            <Icon name="download" size={18} />
+          </span>
+          <div>
+            <h3>Télécharger Lisere-Setup.exe</h3>
+            <p>
+              Le fichier fait {release.installerSize}. L’installation est prévue
+              pour le compte Windows courant, sans droits administrateur.
+            </p>
+          </div>
+        </div>
+        <div class="download-step">
+          <span class="download-step__icon">
+            <Icon name="play" size={18} />
+          </span>
+          <div>
+            <h3>Lancer l’installateur</h3>
+            <p>
+              Windows peut afficher SmartScreen car le binaire n’est pas signé par
+              un certificat commercial. Vérifiez l’empreinte SHA-256 avant de
+              l’exécuter.
+            </p>
+          </div>
+        </div>
+        <div class="download-step">
+          <span class="download-step__icon">
+            <Icon name="folder" size={18} />
+          </span>
+          <div>
+            <h3>Choisir le dossier et les raccourcis</h3>
+            <p>
+              Le dossier par défaut est <code>%LOCALAPPDATA%\Programs\Lisere</code>.
+              Le raccourci du menu Démarrer est proposé, celui du Bureau reste
+              optionnel.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="download-note">
+        <strong>À vérifier :</strong> l’empreinte de l’installateur publiée dans la
+        release doit correspondre exactement au fichier téléchargé. Si elle diffère,
+        ne lancez pas le fichier et signalez le problème sur GitHub.
+      </p>
+
+      <div class="download-aside-block">
+        <h3>Mettre à jour depuis une version précédente</h3>
+        <p>
+          Ouvrez <strong>Mises à jour → Vérifier</strong>, puis <strong>Installer</strong>.
+          L’application interroge la dernière release GitHub et vérifie le paquet
+          avant de remplacer les fichiers.
+        </p>
+        <div class="download-aside-links">
+          <a href={site.latestRelease}>Dernière release</a>
+          <a href={site.zipChecksum}>Empreinte du paquet .zip</a>
+        </div>
+      </div>
+    </div>
+
+    <aside class="download-content__aside" aria-label="Configuration et ressources">
+      <SectionHeader title="Configuration" />
+      <SpecTable rows={formatRows} />
+
+      <div class="download-aside-block">
+        <h3>Ressources</h3>
+        <p>
+          Le guide d’utilisation couvre les raccourcis, les formats, les limites
+          des moteurs et la désinstallation.
+        </p>
+        <div class="download-aside-links">
+          <a href={site.guide}>Guide d’utilisation</a>
+          <a href={site.installerChecksum}>Empreinte SHA-256</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="download-faq" aria-labelledby="faq-telechargement">
+    <div class="container download-faq__inner">
+      <div class="download-faq__header">
+        <h2 id="faq-telechargement">Questions avant d’installer</h2>
+        <p>
+          Les réponses viennent du README et du guide du projet. Le dépôt reste le
+          point de départ pour les détails techniques.
+        </p>
+      </div>
+      <FaqList items={faqs} />
+    </div>
+  </section>
+</BaseLayout>

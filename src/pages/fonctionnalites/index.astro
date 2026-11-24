@@ -1,0 +1,311 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ButtonLink from '../../components/ButtonLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import FeatureRow from '../../components/FeatureRow.astro';
+import FigureFrame from '../../components/FigureFrame.astro';
+import LocalDiagram from '../../components/LocalDiagram.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import SpecTable from '../../components/SpecTable.astro';
+import {
+  engines,
+  formats,
+  grades,
+  imageControls,
+  imagePoints,
+  presets,
+  videoPoints,
+} from '../../data/features';
+import { release, site } from '../../data/site';
+import detail from '../../assets/images/hero/detail.jpg';
+import '../../styles/pages/fonctionnalites.css';
+
+const breadcrumbs = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Fonctionnalités' },
+];
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, Astro.site ?? 'https://lisere.pages.dev').href } : {}),
+  })),
+};
+
+const formatRows = formats.map((row) => ({ label: row.label, value: row.value }));
+---
+
+<BaseLayout
+  title="Liseré : fonctionnalités de l’application Windows"
+  description="Image, vidéo, préréglages, colorimétrie, moteurs ONNX et formats : les fonctionnalités précises de Liseré, application locale pour Windows."
+  schema={breadcrumbSchema}
+>
+  <PageHero
+    title="Fonctionnalités de Liseré"
+    lead="Les réglages d’image, la timeline vidéo, les presets, les moteurs ONNX et les formats pris en charge sont détaillés ci-dessous."
+    breadcrumbs={breadcrumbs}
+  >
+    <ButtonLink href="/telecharger/" icon="download">Télécharger Liseré</ButtonLink>
+    <ButtonLink href="/galerie/" variant="secondary" icon="arrow-right">
+      Voir les comparatifs
+    </ButtonLink>
+  </PageHero>
+
+  <nav class="feature-index" aria-label="Sections de la page">
+    <div class="container feature-index__inner">
+      <a href="#image">Image</a>
+      <a href="#video">Vidéo</a>
+      <a href="#prereglages">Préréglages</a>
+      <a href="#moteurs">Moteurs</a>
+      <a href="#formats">Formats</a>
+      <a href="#local">Local</a>
+    </div>
+  </nav>
+
+  <section id="image" class="features-section" aria-labelledby="image-titre">
+    <div class="container">
+      <SectionHeader
+        id="image-titre"
+        title="L’image, réglage par réglage"
+        intro="Liseré montre l’original et le rendu au même cadrage. Les six réglages restent accessibles, et le preset complet peut être relu dans un éditeur de texte."
+        class="features-section__header"
+      />
+
+      <FeatureRow
+        title="Six réglages, un rendu contrôlable"
+        body="Le pipeline classique combine correction de compression, bruit, netteté, détails, halo et contours. Il travaille sur l’image entière, sans redimensionner la sortie."
+        points={imagePoints}
+      >
+        <FigureFrame>
+          <Image
+            src={detail}
+            alt="Détail à 100 % des rochers et de l’herbe du lac Hooker après upscale."
+            widths={[600, 898]}
+            sizes="(min-width: 900px) 57vw, 100vw"
+            loading="lazy"
+            decoding="async"
+          />
+        </FigureFrame>
+      </FeatureRow>
+
+      <ul class="image-controls" aria-label="Les six réglages d’image">
+        {imageControls.map((control) => (
+          <li>
+            {control}
+            <span>réglable</span>
+          </li>
+        ))}
+      </ul>
+
+      <p class="features-section__note">
+        Le renforcement des visages utilise YuNet. Il concentre la micro-texture
+        sur la peau et évite d’ajouter du grain au fond ou aux cheveux. Les images
+        CMJN, 16 bits, indexées, progressives ou transparentes sont normalisées à
+        l’ouverture.
+      </p>
+    </div>
+  </section>
+
+  <section id="video" class="features-section" aria-labelledby="video-titre">
+    <div class="container">
+      <SectionHeader
+        id="video-titre"
+        title="La vidéo, avec le temps visible"
+        intro="La timeline, l’aperçu et la file d’attente travaillent ensemble. Chaque job garde ses réglages, même si vous modifiez la page pendant un rendu."
+        class="features-section__header"
+      />
+
+      <FeatureRow
+        title="Une timeline qui garde le temps"
+        body="FFmpeg analyse le clip, Liseré choisit la frame, et l’aperçu peut être rendu sur une seconde. La lecture suit le temps réel : quand le moteur ne suit pas, les frames sont sautées."
+        points={videoPoints}
+        reverse
+      >
+        <figure class="feature-screen">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/screenshots/liser-video-fr-750.webp 750w, /screenshots/liser-video-fr-1500.webp 1500w"
+              sizes="(min-width: 900px) 47vw, 92vw"
+            />
+            <img
+              src="/screenshots/liser-video-fr-1500.jpg"
+              srcset="/screenshots/liser-video-fr-750.jpg 750w, /screenshots/liser-video-fr-1500.jpg 1500w"
+              sizes="(min-width: 900px) 47vw, 92vw"
+              width="1500"
+              height="900"
+              alt="Espace Vidéo de Liseré : timeline, aperçu avant/après et réglages d’export"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+      </FeatureRow>
+
+      <dl class="video-facts">
+        <div class="video-fact">
+          <dt>Résolution</dt>
+          <dd>Source, 2×, 4×, 1080p ou 2160p.</dd>
+        </div>
+        <div class="video-fact">
+          <dt>Cadence</dt>
+          <dd>Source, 30, 60 ou 120 i/s.</dd>
+        </div>
+        <div class="video-fact">
+          <dt>Passes</dt>
+          <dd>RIFE ×2, désentrelacement bwdif et stabilisation vidstab en deux passes.</dd>
+        </div>
+        <div class="video-fact">
+          <dt>Sortie</dt>
+          <dd>MP4 H.264 ou H.265, audio AAC. Progression réelle et annulation.</dd>
+        </div>
+        <div class="video-fact">
+          <dt>TikTok</dt>
+          <dd>
+            Préparer pour TikTok… : version ≤ 1080p en H.264/AAC (piste AAC requise),
+            même sans moteur. La méthode OBX de CompressBase est appliquée localement,
+            sans envoi à CompressBase ; TikTok peut encore recompresser le fichier.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section
+    id="prereglages"
+    class="features-section features-presets"
+    aria-labelledby="prereglages-titre"
+  >
+    <div class="container">
+      <SectionHeader
+        id="prereglages-titre"
+        title="Les presets ne cachent rien"
+        intro="Cinq modes d’amélioration, cinq étalonnages After Effects reproduits et un preset complet en JSON. Les valeurs restent réglables, même après l’import."
+        class="features-section__header"
+      />
+
+      <div class="preset-columns">
+        <div>
+          <h3>Amélioration</h3>
+          <p class="preset-columns__intro">
+            Un mode décide comment les six curseurs sont calculés. Chroma reste
+            le préréglage de référence de Liseré.
+          </p>
+          <div class="preset-list">
+            {presets.map((preset) => (
+              <div class="preset-list__item">
+                <h4>{preset.name}</h4>
+                <p>{preset.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3>Colorimétrie</h3>
+          <p class="preset-columns__intro">
+            L’étalonnage s’applique après l’amélioration. Les noms font référence
+            à des presets After Effects analysés, sans distribuer de fichier
+            propriétaire.
+          </p>
+          <div class="preset-list">
+            {grades.map((grade) => (
+              <div class="preset-list__item">
+                <h4>{grade.name}</h4>
+                <p>{grade.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="moteurs" class="features-section" aria-labelledby="moteurs-titre">
+    <div class="container">
+      <SectionHeader
+        id="moteurs-titre"
+        title="Des moteurs vérifiés, fichier par fichier"
+        intro="Les modèles ONNX sont catalogués avec leur fichier, leur échelle, leur licence et leur empreinte SHA-256. Un modèle absent ou modifié est signalé indisponible."
+        class="features-section__header"
+      />
+
+      <div class="engine-list">
+        {engines.map((engine) => (
+          <div class="engine-list__item">
+            <div class="engine-list__head">
+              <h3>{engine.name}</h3>
+              <span>{engine.kind}</span>
+            </div>
+            <p>{engine.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="features-section__note">
+        DirectML est utilisé quand un adaptateur DirectX 12 est disponible. Sinon,
+        le repli CPU prend le relais et la note du moteur indique lequel est actif.
+        RIFE est limité au ×2 ; BasicVSR++ et la restauration de visages ne sont
+        pas intégrés.
+      </p>
+    </div>
+  </section>
+
+  <section id="formats" class="features-section" aria-labelledby="formats-titre">
+    <div class="container formats-grid">
+      <div>
+        <SectionHeader
+          id="formats-titre"
+          title="Ce qui entre, ce qui sort"
+          intro="Les formats dépendent des codecs installés sur Windows et de la compilation FFmpeg fournie. Voici les limites à connaître avant un rendu."
+        />
+        <div class="formats-grid__aside">
+          <p>
+            L’export image est un JPEG de qualité 92. Pour la vidéo, la rotation
+            portée par les métadonnées n’est pas appliquée au décodage.
+          </p>
+          <p>
+            L’aperçu vidéo d’une seconde ne conserve pas l’audio. Le fichier
+            temporaire est purgé après 24 heures.
+          </p>
+        </div>
+      </div>
+
+      <SpecTable
+        rows={formatRows}
+        caption={`Liseré ${release.version} · Windows 10 et 11`}
+      />
+    </div>
+  </section>
+
+  <section id="local" class="features-local section--night" aria-labelledby="local-fonctionnalites-titre">
+    <div class="container features-local__grid">
+      <div class="features-local__copy">
+        <h2 id="local-fonctionnalites-titre">Le traitement reste sur la machine</h2>
+        <p>
+          Le traitement se fait sur votre machine. La vérification de mise à jour
+          interroge GitHub uniquement quand vous la demandez.
+        </p>
+        <ButtonLink href={site.github} variant="secondary" icon="github" external>
+          Vérifier le code sur GitHub
+        </ButtonLink>
+      </div>
+      <LocalDiagram />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Regardez le rendu de près"
+    lead="La galerie rassemble des comparatifs produits avec Liseré, avec les réglages et les crédits de chaque image."
+  >
+    <ButtonLink href="/galerie/" variant="secondary" icon="arrow-right">
+      Ouvrir la galerie
+    </ButtonLink>
+    <ButtonLink href="/telecharger/" icon="download">Télécharger</ButtonLink>
+  </CtaBand>
+</BaseLayout>

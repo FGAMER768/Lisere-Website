@@ -1,0 +1,51 @@
+---
+import { release, site } from '../data/site';
+import ButtonLink from './ButtonLink.astro';
+import CopyHash from './CopyHash.astro';
+import Icon from './Icon.astro';
+import './DownloadTicket.css';
+---
+
+<section class="download-ticket" aria-labelledby="download-ticket-title">
+  <div class="download-ticket__main">
+    <h2 id="download-ticket-title" class="download-ticket__title">
+      Liseré <span>{release.version}</span>
+    </h2>
+    <p class="download-ticket__platform">
+      <Icon name="windows" size={18} />
+      Windows 10 et 11, 64 bits
+    </p>
+    <ButtonLink href={site.installer} variant="primary" icon="download" external>
+      Télécharger l’installateur
+    </ButtonLink>
+    <p class="download-ticket__meta">
+      {release.installerSize} · installation par utilisateur
+    </p>
+  </div>
+
+  <div class="download-ticket__side">
+    <dl class="download-ticket__facts">
+      <div>
+        <dt>Version</dt>
+        <dd>{release.version}</dd>
+      </div>
+      <div>
+        <dt>Publiée le</dt>
+        <dd>{release.date}</dd>
+      </div>
+      <div>
+        <dt>Paquet de mise à jour</dt>
+        <dd>
+          <a href={site.zip}>{release.zipSize} (.zip)</a>
+        </dd>
+      </div>
+    </dl>
+
+    <CopyHash hash={release.installerHash} />
+    <p class="download-ticket__links">
+      <a href={site.installerChecksum}>Empreinte seule</a>
+      <span aria-hidden="true">/</span>
+      <a href={site.releases}>Toutes les versions</a>
+    </p>
+  </div>
+</section>

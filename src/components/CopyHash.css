@@ -1,0 +1,40 @@
+.copy-hash {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+}
+
+.copy-hash__label {
+  grid-column: 1 / -1;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.copy-hash__value {
+  overflow-wrap: anywhere;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+}
+
+.copy-hash__button {
+  min-height: 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xs);
+  padding: 0.25rem 0.55rem;
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.copy-hash__button:hover {
+  background: var(--paper-deep);
+}
+
+.copy-hash__button:active {
+  transform: scale(0.98);
+}

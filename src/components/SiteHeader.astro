@@ -1,0 +1,83 @@
+---
+import { nav, site } from '../data/site';
+import ButtonLink from './ButtonLink.astro';
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+import './SiteHeader.css';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <Wordmark />
+
+    <nav class="site-header__nav" aria-label="Navigation principale">
+      {
+        nav.map((item) => (
+          <a
+            class:list={['site-header__link', isActive(item.href) && 'site-header__link--active']}
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        class="site-header__github"
+        href={site.github}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="github" size={18} />
+        <span>GitHub</span>
+        <span class="visually-hidden">(nouvelle fenêtre)</span>
+      </a>
+      <ButtonLink href="/telecharger/" variant="primary" size="small">
+        Télécharger
+      </ButtonLink>
+    </div>
+
+    <details class="site-header__mobile" data-mobile-nav>
+      <summary class="site-header__menu">
+        <span>Menu</span>
+        <Icon name="menu" size={18} />
+      </summary>
+      <div class="site-header__mobile-panel">
+        <nav aria-label="Navigation mobile">
+          {
+            nav.map((item) => (
+              <a
+                class:list={['site-header__mobile-link', isActive(item.href) && 'site-header__mobile-link--active']}
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="site-header__mobile-footer">
+          <ButtonLink href="/telecharger/" variant="primary" icon="download">
+            Télécharger pour Windows
+          </ButtonLink>
+          <a
+            class="site-header__mobile-github"
+            href={site.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="github" size={18} />
+            Ouvrir GitHub
+            <span class="visually-hidden">(nouvelle fenêtre)</span>
+          </a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>

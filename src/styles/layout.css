@@ -1,0 +1,24 @@
+body {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
+.site-main {
+  flex: 1;
+  overflow: clip;
+}
+
+.page-shell {
+  padding-block: clamp(3.5rem, 7vw, 7rem) var(--section-y);
+}
+
+.page-shell--tight {
+  padding-block: clamp(2.5rem, 5vw, 5rem) var(--section-y);
+}
+
+@media (min-width: 960px) {
+  .page-shell {
+    padding-block: clamp(5rem, 8vw, 9rem) var(--section-y);
+  }
+}

@@ -1,0 +1,30 @@
+<svg data-name="Liseré Icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 834 834">
+  <defs>
+    <filter id="a" data-name="outer-glow-1" x="0" y="0" width="834" height="834" filterUnits="userSpaceOnUse">
+      <feOffset/>
+      <feGaussianBlur result="f" stdDeviation="20"/>
+      <feFlood flood-color="#000" flood-opacity=".5"/>
+      <feComposite in2="f" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="b" data-name="drop-shadow-2" x="160" y="182" width="528" height="484" filterUnits="userSpaceOnUse">
+      <feOffset dx="7" dy="7"/>
+      <feGaussianBlur result="j" stdDeviation="5"/>
+      <feFlood flood-color="#000" flood-opacity=".75"/>
+      <feComposite in2="j" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g data-name="Liseré Icon">
+    <g style="filter:url(#a)" data-name="Background">
+      <rect data-name="Rectangle" x="60.76" y="60.76" width="712.49" height="712.49" rx="97.86" ry="97.86" style="fill:#fbf1e4"/>
+    </g>
+    <g data-name="L Pattern">
+      <g data-name="Group" style="filter:url(#b)">
+        <path d="M545.35 520.75c-5.57 29.94-25.07 103.75-31.33 122.55H168.65v-25.76c61.27-4.18 66.84-9.05 66.84-67.54V284.71c0-58.49-6.96-64.06-59.19-68.24v-25.76h217.25v25.76c-54.31 4.87-61.27 9.75-61.27 68.24v270.16c0 38.3 1.39 55.7 39.69 56.4 1.39.7 33.42.7 36.21.7 39.69 0 50.13-8.36 66.84-27.16 13.23-13.93 31.33-43.87 43.87-72.41l26.46 8.36Z" style="fill:#332d27" data-name="L1"/>
+        <path d="M605.35 520.75c-5.57 29.94-25.07 103.75-31.33 122.55H228.65v-25.76c61.27-4.18 66.84-9.05 66.84-67.54V284.71c0-58.49-6.96-64.06-59.19-68.24v-25.76h217.25v25.76c-54.31 4.87-61.27 9.75-61.27 68.24v270.16c0 38.3 1.39 55.7 39.69 56.4 1.39.7 33.42.7 36.21.7 39.69 0 50.13-8.36 66.84-27.16 13.23-13.93 31.33-43.87 43.87-72.41l26.46 8.36Z" style="fill:#665f58" data-name="L2"/>
+        <path d="M665.35 520.75c-5.57 29.94-25.07 103.75-31.33 122.55H288.66v-25.76c61.27-4.18 66.84-9.05 66.84-67.54V284.71c0-58.49-6.96-64.06-59.19-68.24v-25.76h217.25v25.76c-54.31 4.87-61.27 9.75-61.27 68.24v270.16c0 38.3 1.39 55.7 39.69 56.4 1.39.7 33.42.7 36.21.7 39.69 0 50.13-8.36 66.84-27.16 13.23-13.93 31.33-43.87 43.87-72.41l26.46 8.36Z" style="fill:#a69f98" data-name="L3"/>
+      </g>
+    </g>
+  </g>
+</svg>

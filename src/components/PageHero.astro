@@ -1,0 +1,27 @@
+---
+import type { BreadcrumbItem } from './Breadcrumbs.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import './PageHero.css';
+
+interface Props {
+  title: string;
+  lead: string;
+  breadcrumbs?: BreadcrumbItem[];
+  class?: string;
+}
+
+const { title, lead, breadcrumbs, class: className } = Astro.props;
+---
+
+<section class:list={['page-hero', className]} data-enter>
+  <div class="container">
+    {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+    <h1 class="page-hero__title">{title}</h1>
+    <div class:list={['page-hero__bottom', !Astro.slots.has('default') && 'page-hero__bottom--solo']}>
+      <p class="page-hero__lead">{lead}</p>
+      <div class="page-hero__actions">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import './LocalDiagram.css';
+---
+
+<figure class="local-diagram">
+  <div class="local-diagram__flow">
+    <div class="local-diagram__node">
+      <Icon name="file" size={22} />
+      <span>Votre fichier</span>
+      <small>Image ou vidéo</small>
+    </div>
+
+    <span class="local-diagram__connector" aria-hidden="true"></span>
+
+    <div class="local-diagram__node local-diagram__node--core">
+      <Icon name="layers" size={22} />
+      <span>Liseré</span>
+      <small>Sur votre PC</small>
+    </div>
+
+    <span class="local-diagram__connector" aria-hidden="true"></span>
+
+    <div class="local-diagram__node">
+      <Icon name="download" size={22} />
+      <span>Votre export</span>
+      <small>JPEG ou MP4</small>
+    </div>
+  </div>
+
+  <figcaption class="local-diagram__caption">
+    Le fichier ne quitte pas votre PC. Seule la vérification de mise à jour
+    contacte GitHub, et elle attend votre demande.
+  </figcaption>
+</figure>

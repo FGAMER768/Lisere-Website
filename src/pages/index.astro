@@ -1,0 +1,356 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import ButtonLink from '../components/ButtonLink.astro';
+import CtaBand from '../components/CtaBand.astro';
+import FeatureRow from '../components/FeatureRow.astro';
+import FilmStrip from '../components/FilmStrip.astro';
+import Icon from '../components/Icon.astro';
+import LocalDiagram from '../components/LocalDiagram.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { imagePoints, videoPoints } from '../data/features';
+import { release, site } from '../data/site';
+import after from '../assets/images/hero/after.jpg';
+import detailBefore from '../assets/images/hero/detail-before.jpg';
+import detailAfter from '../assets/images/hero/detail-after.jpg';
+import '../styles/pages/home.css';
+
+const base = Astro.site ?? new URL('https://lisere.pages.dev');
+
+const softwareSchema = {
+  '@type': 'SoftwareApplication',
+  name: 'Liseré',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'Windows 10, Windows 11',
+  softwareVersion: release.version,
+  url: new URL('/', base).href,
+  downloadUrl: site.latestRelease,
+  author: {
+    '@type': 'Person',
+    name: site.author,
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'EUR',
+  },
+  screenshot: new URL('/og/lisere-og.jpg', base).href,
+  description: site.description,
+  inLanguage: 'fr-FR',
+};
+
+const presetSnippet = `{
+  "format": "lisere-preset",
+  "version": 1,
+  "name": "Portrait",
+  "enhancement": {
+    "mode": "Manual",
+    "engine": "realesrgan-x4",
+    "refineFaces": true
+  },
+  "color": {
+    "preset": "UltronCc"
+  }
+}`;
+
+const detailSliders = [
+  { label: 'Netteté', value: 62 },
+  { label: 'Bruit', value: 34 },
+  { label: 'Détails', value: 48 },
+];
+
+const installSteps = [
+  {
+    icon: 'download' as const,
+    title: 'Télécharger',
+    body: `Lisere-Setup.exe, ${release.installerSize}.`,
+  },
+  {
+    icon: 'shield' as const,
+    title: 'Vérifier l’empreinte',
+    body: 'Comparez le SHA-256 avec celui publié dans la release.',
+  },
+  {
+    icon: 'folder' as const,
+    title: 'Installer',
+    body: 'Le dossier par défaut est %LOCALAPPDATA%\\Programs\\Lisere.',
+  },
+];
+
+const specPoints = [
+  { icon: 'windows' as const, label: 'Windows 10 et 11' },
+  { icon: 'cpu' as const, label: 'ONNX · DirectML' },
+  { icon: 'lock' as const, label: 'Traitement local' },
+  { icon: 'code' as const, label: '486 tests' },
+];
+---
+
+<BaseLayout
+  title="Liseré : amélioration locale de photos et vidéos sur Windows"
+  description={site.description}
+  schema={softwareSchema}
+>
+  <section class="hero" aria-labelledby="accueil-titre" data-enter>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <h1 id="accueil-titre">Améliorez vos photos et vidéos, sur votre PC</h1>
+        <p class="hero__lead">
+          Liseré agrandit, débruite et restaure vos fichiers avec des moteurs ONNX
+          locaux. Vous comparez le rendu au même cadrage, puis vous exportez en
+          JPEG ou en MP4.
+        </p>
+        <div class="hero__actions">
+          <ButtonLink href="/telecharger/" icon="download">
+            Télécharger pour Windows
+          </ButtonLink>
+          <ButtonLink href="/galerie/" variant="secondary" icon="arrow-right">
+            Voir les comparatifs
+          </ButtonLink>
+        </div>
+        <p class="hero__meta">
+          Version {release.version} · {release.installerSize} · Windows 10 et 11
+        </p>
+      </div>
+
+      <div class="hero__visual">
+        <figure class="hero__screen">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/screenshots/liser-image-fr-750.webp 750w, /screenshots/liser-image-fr-1500.webp 1500w"
+              sizes="(min-width: 1200px) 43vw, 92vw"
+            />
+            <img
+              src="/screenshots/liser-image-fr-1500.jpg"
+              srcset="/screenshots/liser-image-fr-750.jpg 750w, /screenshots/liser-image-fr-1500.jpg 1500w"
+              sizes="(min-width: 1200px) 43vw, 92vw"
+              width="1500"
+              height="900"
+              alt="Espace Image de Liseré : comparaison avant/après avec l’étalonnage Ultron CC"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+
+    <div class="container">
+      <ul class="spec-strip" aria-label="Configuration prise en charge">
+        {
+          specPoints.map((point) => (
+            <li>
+              <Icon name={point.icon} size={16} />
+              {point.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section product" aria-labelledby="produit-titre">
+    <div class="container">
+      <SectionHeader
+        id="produit-titre"
+        title="Ce que Liseré fait"
+        intro="Trois espaces de travail : l’image, la vidéo et les préréglages. Les réglages restent visibles et chaque export part du fichier d’origine."
+      />
+
+      <div class="product__rows">
+        <FeatureRow
+          title="Six réglages, un rendu contrôlable"
+          body="Le pipeline combine correction de compression, bruit, netteté, détails, halo et contours. Il travaille sur l’image entière, sans redimensionner la sortie."
+          points={imagePoints.slice(0, 4)}
+        >
+          <div class="detail-panel">
+            <div class="detail-panel__bar">
+              <span>Avant / Après</span>
+              <span>Real-ESRGAN ×4</span>
+            </div>
+            <div class="detail-panel__image">
+              <BeforeAfter
+                before={detailBefore}
+                after={detailAfter}
+                beforeAlt="Détail du torrent et des rochers du lac Hooker, image de départ agrandie en bicubique, encore floue."
+                afterAlt="Le même détail du torrent après Real-ESRGAN ×4, avec les rochers et l’eau plus nets."
+                initial={50}
+                sizes="(min-width: 960px) 46vw, 100vw"
+              />
+            </div>
+            <div class="detail-panel__controls" aria-hidden="true">
+              {
+                detailSliders.map((slider) => (
+                  <div class="detail-panel__slider">
+                    <div class="detail-panel__slider-head">
+                      <span>{slider.label}</span>
+                      <span>{slider.value}</span>
+                    </div>
+                    <div class="detail-panel__track">
+                      <span style={`width:${slider.value}%`} />
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </FeatureRow>
+
+        <FeatureRow
+          title="Une timeline qui garde le temps"
+          body="FFmpeg analyse le clip, Liseré choisit la frame et l’aperçu peut être rendu sur une seconde. Chaque job fige ses réglages pour que le suivant ne les déplace pas."
+          points={videoPoints.slice(0, 4)}
+          reverse
+        >
+          <div class="video-panel">
+            <div class="video-panel__bar">
+              <span>Timeline</span>
+              <span>lac-hooker.mp4 · 00:20</span>
+            </div>
+            <FilmStrip
+              image={after}
+              alt="Vignette du comparatif du lac Hooker utilisée pour illustrer la timeline."
+            />
+            <div class="video-panel__controls" aria-hidden="true">
+              <span class="video-panel__play"></span>
+              <span class="video-panel__time">00:12 / 00:20</span>
+              <span class="video-panel__zoom">100 %</span>
+            </div>
+          </div>
+        </FeatureRow>
+
+        <FeatureRow
+          title="Des préréglages JSON que vous pouvez lire"
+          body="Le preset complet réunit les curseurs, la colorimétrie, le moteur et le renforcement des visages dans un fichier texte. Les valeurs restent réglables après l’import."
+          points={[
+            'Cinq modes d’amélioration, dont Chroma',
+            'Cinq étalonnages After Effects reproduits',
+            'Valeurs modifiables dans un éditeur de texte',
+          ]}
+        >
+          <figure class="preset-panel" aria-label="Exemple de preset Liseré au format JSON">
+            <div class="preset-panel__bar">
+              <span>lisere-preset.json</span>
+              <span>JSON</span>
+            </div>
+            <pre><code>{presetSnippet}</code></pre>
+          </figure>
+        </FeatureRow>
+      </div>
+    </div>
+  </section>
+
+  <section class="local section--night" aria-labelledby="local-titre">
+    <div class="container local__grid">
+      <div class="local__copy">
+        <h2 id="local-titre">Le traitement reste sur votre PC</h2>
+        <p>
+          Liseré ouvre vos fichiers locaux, applique les modèles sur la machine et
+          écrit l’export dans le dossier choisi. La vérification de mise à jour est
+          la seule connexion, et elle attend votre demande.
+        </p>
+        <ul class="local__list">
+          <li>
+            <Icon name="shield" size={18} />
+            Vos photos et vidéos restent dans vos dossiers.
+          </li>
+          <li>
+            <Icon name="cpu" size={18} />
+            DirectML quand un adaptateur DirectX 12 est disponible, CPU sinon.
+          </li>
+          <li>
+            <Icon name="monitor" size={18} />
+            La note du moteur indique lequel est actif pendant le rendu.
+          </li>
+        </ul>
+        <ButtonLink href={site.github} variant="secondary" icon="github" external>
+          Vérifier le code sur GitHub
+        </ButtonLink>
+      </div>
+
+      <LocalDiagram />
+    </div>
+  </section>
+
+  <section class="section proof" aria-labelledby="preuves-titre">
+    <div class="container proof__grid">
+      <div class="proof__copy">
+        <h2 id="preuves-titre">Les chiffres de la version 1.3.0</h2>
+        <p>
+          Le dépôt public contient l’application, les quatre projets de test et les
+          empreintes de publication. Ces chiffres sont ceux de la version 1.3.0.
+        </p>
+        <ButtonLink href="/code-source/" variant="secondary" icon="code">
+          Lire l’architecture
+        </ButtonLink>
+      </div>
+
+      <dl class="proof__stats">
+        <div>
+          <dt>Tests</dt>
+          <dd>486</dd>
+          <p>125 Core · 27 Ai · 57 Vidéo · 277 App</p>
+        </div>
+        <div>
+          <dt>Version</dt>
+          <dd>1.3.0</dd>
+          <p>Publiée le 23 novembre 2026</p>
+        </div>
+        <div>
+          <dt>Installateur</dt>
+          <dd>210,8 Mo</dd>
+          <p>Empreinte SHA-256 dans la release</p>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section install" aria-labelledby="installation-titre">
+    <div class="container install__grid">
+      <div class="install__copy">
+        <h2 id="installation-titre">Installer Liseré</h2>
+        <p>
+          L’installateur contient l’application, FFmpeg et les modèles.
+          L’installation se fait dans votre profil Windows, sans droits
+          administrateur.
+        </p>
+        <ButtonLink href="/telecharger/" icon="download">
+          Télécharger Liseré
+        </ButtonLink>
+        <p class="install__note">
+          Le développement est en pause ; la version {release.version} reste
+          téléchargeable.
+        </p>
+      </div>
+
+      <ol class="install__steps">
+        {
+          installSteps.map((step) => (
+            <li>
+              <span class="install__step-icon">
+                <Icon name={step.icon} size={18} />
+              </span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Installez Liseré 1.3.0"
+    lead="Windows 10 et 11. Un installateur, une empreinte SHA-256, et vos fichiers restent sur votre PC."
+  >
+    <ButtonLink href="/telecharger/" icon="download">
+      Télécharger Liseré
+    </ButtonLink>
+    <ButtonLink href={site.github} variant="secondary" icon="github" external>
+      Ouvrir GitHub
+    </ButtonLink>
+  </CtaBand>
+</BaseLayout>

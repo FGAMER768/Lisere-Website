@@ -1,0 +1,29 @@
+---
+import './SpecTable.css';
+
+export type SpecRow = {
+  label: string;
+  value: string;
+};
+
+interface Props {
+  rows: readonly SpecRow[];
+  caption?: string;
+}
+
+const { rows, caption } = Astro.props;
+---
+
+<div class="spec-table">
+  {caption && <p class="spec-table__caption">{caption}</p>}
+  <dl class="spec-table__list">
+    {
+      rows.map((row) => (
+        <div class="spec-table__row">
+          <dt>{row.label}</dt>
+          <dd>{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>

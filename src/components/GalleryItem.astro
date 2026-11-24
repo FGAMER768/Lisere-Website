@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import type { GalleryItem } from '../data/gallery';
+import FigureFrame from './FigureFrame.astro';
+import './GalleryItem.css';
+
+interface Props {
+  item: GalleryItem;
+  wide?: boolean;
+}
+
+const { item, wide = false } = Astro.props;
+const widths = item.imageWidths ?? (wide ? [800, 1200, 1600] : [720, 1100, 1600]);
+const illustration = item.imageWidths !== undefined;
+---
+
+<article class:list={['gallery-item', wide && 'gallery-item--wide', illustration && 'gallery-item--illustration']}>
+  <FigureFrame>
+    <Image
+      src={item.image}
+      alt={item.alt}
+      widths={widths}
+      sizes={illustration ? '(min-width: 900px) 560px, 100vw' : wide ? '(min-width: 900px) 90vw, 100vw' : '(min-width: 900px) 44vw, 100vw'}
+      loading="lazy"
+      decoding="async"
+    />
+  </FigureFrame>
+
+  <div class="gallery-item__body">
+    <h3>{item.title}</h3>
+    <p class="gallery-item__description">{item.description}</p>
+    <p class="gallery-item__settings mono">{item.settings}</p>
+    <p class="gallery-item__credit">
+      {item.creditHref ? (
+        <a href={item.creditHref} rel="noopener noreferrer">{item.credit}</a>
+      ) : (
+        <span>{item.credit}</span>
+      )}
+    </p>
+  </div>
+</article>

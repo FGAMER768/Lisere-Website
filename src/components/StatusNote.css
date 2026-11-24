@@ -1,0 +1,19 @@
+.status-note {
+  max-width: 54ch;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.status-note strong {
+  color: var(--ink);
+  font-weight: 550;
+}
+
+.status-note--dark {
+  color: var(--night-muted);
+}
+
+.status-note--dark strong {
+  color: var(--night-text);
+}

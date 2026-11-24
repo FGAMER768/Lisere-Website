@@ -1,0 +1,139 @@
+.download-status {
+  margin-top: 1.5rem;
+}
+
+.download-ticket-wrap {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.download-content {
+  display: grid;
+  gap: clamp(3rem, 6vw, 6rem);
+  padding-block: var(--section-y);
+}
+
+.download-content__main,
+.download-content__aside {
+  min-width: 0;
+}
+
+.download-content__main .section-header,
+.download-content__aside .section-header {
+  margin-bottom: 1.5rem;
+}
+
+.download-steps {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.download-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.download-step__icon {
+  padding-top: 0.15rem;
+  color: var(--accent);
+}
+
+.download-step h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 550;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.download-step p {
+  margin-top: 0.25rem;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.download-note {
+  max-width: 58ch;
+  margin-top: 1.4rem;
+  padding: 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xs);
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.download-note strong {
+  color: var(--ink);
+  font-weight: 550;
+}
+
+.download-aside-block {
+  margin-top: 2rem;
+}
+
+.download-aside-block:first-child {
+  margin-top: 0;
+}
+
+.download-aside-block h3 {
+  margin-bottom: 0.7rem;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 550;
+  letter-spacing: 0;
+}
+
+.download-aside-block p {
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.download-aside-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin-top: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.download-faq {
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--line);
+  background: var(--paper-deep);
+}
+
+.download-faq__inner {
+  display: grid;
+  gap: 2rem;
+}
+
+.download-faq__header {
+  max-width: 34ch;
+}
+
+.download-faq__header p {
+  margin-top: 0.8rem;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+@media (min-width: 860px) {
+  .download-content {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  .download-faq__inner {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 4rem;
+  }
+}

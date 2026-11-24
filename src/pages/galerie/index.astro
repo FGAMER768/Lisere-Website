@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BeforeAfter from '../../components/BeforeAfter.astro';
+import ButtonLink from '../../components/ButtonLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import GalleryItem from '../../components/GalleryItem.astro';
+import PageHero from '../../components/PageHero.astro';
+import { galleryItems } from '../../data/gallery';
+import { heroCompare, site } from '../../data/site';
+import before from '../../assets/images/hero/before.jpg';
+import after from '../../assets/images/hero/after.jpg';
+import '../../styles/pages/galerie.css';
+
+const breadcrumbs = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Galerie' },
+];
+
+const base = Astro.site ?? new URL('https://lisere.pages.dev');
+
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, base).href } : {}),
+  })),
+};
+
+const gallerySchema = {
+  '@type': 'ImageGallery',
+  name: 'Galerie de comparatifs Liseré',
+  url: new URL('/galerie/', base).href,
+  description:
+    'Images et comparatifs produits avec Liseré, avec les réglages, les moteurs et les crédits.',
+  image: galleryItems.map((item) => new URL(item.image.src, base).href),
+};
+---
+
+<BaseLayout
+  title="Galerie : comparatifs avant/après de Liseré"
+  description="Regardez des images et des comparatifs produits avec Liseré : upscale, deux moteurs anime, bruit temporel, réglages et crédits des images."
+  schema={[breadcrumbSchema, gallerySchema]}
+>
+  <PageHero
+    title="Comparatifs avant/après"
+    lead="Chaque image indique sa source, son réglage et son moteur. Le comparatif principal montre un détail à 100 % ; les cartes illustrées sont montrées en entier."
+    breadcrumbs={breadcrumbs}
+  >
+    <ButtonLink href="/telecharger/" icon="download">Télécharger Liseré</ButtonLink>
+    <ButtonLink href="/fonctionnalites/" variant="secondary" icon="arrow-right">
+      Voir les fonctionnalités
+    </ButtonLink>
+  </PageHero>
+
+  <section class="gallery-feature" aria-labelledby="comparatif-principal">
+    <div class="container">
+      <div class="gallery-feature__compare">
+        <h2 id="comparatif-principal" class="visually-hidden">Comparatif principal</h2>
+        <p class="gallery-feature__meta">
+          Lac Hooker · source 640 × 427 · sortie 2 560 × 1 708 · bicubique ×4 à
+          gauche, Real-ESRGAN ×4 à droite
+        </p>
+        <BeforeAfter
+          before={before}
+          after={after}
+          beforeAlt={heroCompare.beforeAlt}
+          afterAlt={heroCompare.afterAlt}
+          initial={50}
+          eager
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-reading" aria-label="Comment lire les comparatifs">
+    <div class="container gallery-reading__grid">
+      <div class="gallery-reading__item">
+        <h2>De gauche à droite</h2>
+        <p>L’image de départ est à gauche, le rendu Liseré à droite. Le séparateur se déplace au clavier avec les flèches.</p>
+      </div>
+      <div class="gallery-reading__item">
+        <h2>Le détail à 100 %</h2>
+        <p>Les comparatifs complets incluent une rangée de détail à l’échelle réelle, où le bruit reste visible.</p>
+      </div>
+      <div class="gallery-reading__item">
+        <h2>Les réglages restent visibles</h2>
+        <p>Chaque légende donne la source, la taille de sortie et le moteur utilisé. Les crédits pointent vers l’image d’origine.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-grid container" aria-label="Comparatifs de la galerie">
+    {galleryItems.map((item, index) => (
+      <GalleryItem item={item} wide={index === 0} />
+    ))}
+  </section>
+
+  <section class="gallery-credits" aria-labelledby="credits-titre">
+    <div class="container gallery-credits__inner">
+      <h2 id="credits-titre">Crédits des images</h2>
+      <p>
+        Les images de cette galerie sont créditées à leurs auteurs. Aucune image
+        de test propriétaire n’est présentée comme une démonstration de Liseré.
+        Les noms Topaz et After Effects appartiennent à leurs détenteurs.
+      </p>
+      <div class="gallery-credits__links">
+        <a href="https://altphotos.com/photo/hooker-lake-at-the-bottom-of-mount-cook-new-zealand-1747/">
+          Lac Hooker · Danny Postma / AltPhotos
+        </a>
+        <a href="https://archive.org/details/1917-the-dull-sword-namakura-gatana">
+          Namakura Gatana · Internet Archive
+        </a>
+        <a href="https://www.instagram.com/grandeturisto/" rel="noopener noreferrer">Nikita Kolesnikov (@grandeturisto)</a>
+        <a href={site.guide}>Guide d’utilisation</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="À vous de regarder de plus près"
+    lead="La version 1.3.0 est disponible pour Windows 10 et 11. Vous pouvez aussi lire le code et les tests avant de l’installer."
+  >
+    <ButtonLink href="/telecharger/" icon="download">Télécharger</ButtonLink>
+    <ButtonLink href="/code-source/" variant="secondary" icon="code">
+      Voir le code
+    </ButtonLink>
+  </CtaBand>
+</BaseLayout>
