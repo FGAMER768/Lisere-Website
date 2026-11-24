@@ -33,7 +33,7 @@ Le projet demande Node.js 22 LTS ou plus récent.
 | `/` | Accueil, comparateur principal et promesse produit |
 | `/fonctionnalites/` | Image, vidéo, préréglages, moteurs, formats et traitement local |
 | `/galerie/` | Comparatifs commentés et crédits |
-| `/telecharger/` | Version 1.3.0, installateur, empreinte SHA-256 et installation |
+| `/telecharger/` | Version 1.4.0, installateur, empreinte SHA-256 et installation |
 | `/code-source/` | Dépôt GitHub, architecture, tests et limites de licence |
 
 Les URL sont générées en dossiers avec slash final (`/galerie/`, pas `/galerie.html`). `trailingSlash: 'always'` et `build.format: 'directory'` sont réglés dans `astro.config.mjs`.
@@ -233,4 +233,4 @@ Le dépôt produit **n’a pas de licence globale**. Le site dit donc « code pu
 
 Les modèles ONNX, FFmpeg, RIFE, YuNet et les noms de presets cités gardent leurs conditions d’origine. Aucun fichier propriétaire Topaz ou After Effects n’est distribué.
 
-Le développement de Liseré est en pause faute de GPU exploitable ; la version 1.3.0 reste téléchargeable. Les textes du site reflètent cet état.
+Le développement de Liseré est en pause en attendant la revalidation du backend D3D12 sur un GPU dédié ; la version 1.4.0 reste téléchargeable. Les textes du site reflètent cet état.

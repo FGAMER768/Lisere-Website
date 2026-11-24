@@ -14,6 +14,13 @@ const backgroundPath = path.join(root, 'src/assets/images/hero/after.jpg');
 const ogPath = path.join(root, 'public/og/lisere-og.jpg');
 const iconsDir = path.join(root, 'public/icons');
 
+const siteSource = await fs.readFile(path.join(root, 'src/data/site.ts'), 'utf8');
+const releaseVersion = siteSource.match(/version:\s*'([^']+)'/)?.[1];
+
+if (!releaseVersion) {
+  throw new Error('Version introuvable dans src/data/site.ts');
+}
+
 await fs.mkdir(iconsDir, { recursive: true });
 await fs.mkdir(path.dirname(ogPath), { recursive: true });
 
@@ -37,7 +44,7 @@ const panel = `
     <text x="64" y="368" fill="#101014" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="64" font-weight="650" letter-spacing="-2">sur votre PC</text>
     <text x="64" y="450" fill="#55545e" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="21">Moteurs ONNX locaux. Comparaison avant/après.</text>
     <text x="64" y="482" fill="#55545e" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="21">Export JPEG ou MP4, sans envoi de fichier.</text>
-    <text x="64" y="564" fill="#0f6b6f" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="600">Windows 10 et 11 · version 1.3.0</text>
+    <text x="64" y="564" fill="#0f6b6f" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="600">Windows 10 et 11 · version ${releaseVersion}</text>
     <text x="64" y="596" fill="#6f6e78" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15">${publicHost}</text>
   </svg>
 `;

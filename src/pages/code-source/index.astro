@@ -4,7 +4,7 @@ import ButtonLink from '../../components/ButtonLink.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import PageHero from '../../components/PageHero.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
-import { architecture, testTotals } from '../../data/features';
+import { architecture, testSuite } from '../../data/features';
 import { site } from '../../data/site';
 import '../../styles/pages/code-source.css';
 
@@ -55,7 +55,7 @@ Update/            version.txt et paquets`;
 
 <BaseLayout
   title="Liseré : code source, architecture et tests"
-  description="Explorez le dépôt public de Liseré : architecture WPF et .NET, moteurs ONNX, FFmpeg, 486 tests, commandes de build et licences des composants."
+  description="Explorez le dépôt public de Liseré : architecture WPF et .NET, moteurs ONNX, FFmpeg, 499 tests, commandes de build et licences des composants."
   schema={[breadcrumbSchema, sourceSchema]}
 >
   <PageHero
@@ -69,16 +69,37 @@ Update/            version.txt et paquets`;
     </ButtonLink>
   </PageHero>
 
-  <div class="container">
-    <ul class="source-metrics" aria-label="Chiffres du dépôt">
-      {testTotals.map((total) => (
-        <li class="source-metric">
-          <strong>{total.value}</strong>
-          <span>{total.label}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
+  <section class="source-suite section--night" aria-labelledby="suite-titre">
+    <div class="container source-suite__inner">
+      <div class="source-suite__head">
+        <h2 id="suite-titre">La suite de tests, projet par projet</h2>
+        <p>
+          Quatre projets xUnit couvrent l’interface, le pipeline image, les moteurs
+          et le rendu vidéo.
+        </p>
+      </div>
+
+      <figure class="test-chart">
+        <p class="test-chart__total">{testSuite.total} tests au total</p>
+        <div class="test-chart__bar" aria-hidden="true">
+          {testSuite.projects.map((project) => (
+            <span style={`flex:${project.tests} 1 0%`}></span>
+          ))}
+        </div>
+        <dl class="test-chart__legend">
+          {testSuite.projects.map((project) => (
+            <div>
+              <dt>{project.name}</dt>
+              <dd>{project.tests}</dd>
+            </div>
+          ))}
+        </dl>
+        <figcaption class="visually-hidden">
+          Répartition des {testSuite.total} tests entre les quatre projets.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
 
   <div class="container source-content">
     <div class="source-content__main">
@@ -128,9 +149,9 @@ Update/            version.txt et paquets`;
       <div class="source-aside-block">
         <h2>Tests</h2>
         <p>
-          La suite compte 486 tests : 125 Core, 27 Ai, 57 Vidéo et 277 App. Les
-          tests vidéo génèrent un clip avec FFmpeg et vérifient le rendu, l’audio,
-          le désentrelacement, la taille, l’annulation et l’extraction d’aperçu.
+          Les tests vidéo génèrent un clip avec FFmpeg et vérifient le rendu,
+          l’audio, le désentrelacement, la taille, l’annulation et l’extraction
+          d’aperçu.
         </p>
         <p>
           RIFE est testé en inférence réelle, en rendu simulé puis en rendu réel

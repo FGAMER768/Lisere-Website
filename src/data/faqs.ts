@@ -7,7 +7,7 @@ export const faqs = [
   {
     question: 'Faut-il un GPU pour lancer Liseré ?',
     answer:
-      'Non. Les moteurs ONNX utilisent DirectML quand un adaptateur DirectX 12 est disponible, sinon le CPU. Le repli CPU est plus lent et la note du moteur indique lequel est actif. Les essais 4K restent bloqués faute de GPU exploitable.',
+      'Non. Lisere Classic exécute son pipeline en compute D3D12 sur le GPU dédié quand il est disponible, avec un repli CPU exact. Les moteurs ONNX utilisent DirectML sur l’adaptateur DXGI qui possède le plus de VRAM dédiée, avec un repli CPU dont la raison est affichée dans la note du moteur. Le repli CPU est plus lent. Les essais 4K restent à revalider sur la RTX 4070 de référence.',
   },
   {
     question: 'Pourquoi Windows affiche-t-il un avertissement ?',
@@ -17,11 +17,11 @@ export const faqs = [
   {
     question: 'Puis-je importer des presets d’une autre application ?',
     answer:
-      'Oui pour les presets vidéo JSON. Liseré transpose les réglages qu’il comprend. Aucun poids propriétaire n’est lu et le rendu utilise le moteur choisi dans Liseré.',
+      'Oui pour les presets vidéo JSON. Liseré transpose les réglages qu’il comprend et exporte aussi un preset vidéo complet : six réglages, colorimétrie et moteur dans un seul fichier. Aucun poids propriétaire n’est lu et le rendu utilise le moteur choisi dans Liseré.',
   },
   {
     question: 'Pourquoi le développement est-il en pause ?',
     answer:
-      'Les essais 4K ne sollicitent pas correctement le GPU disponible. Le développement est suspendu tant qu’un GPU utilisable pour ces expérimentations n’est pas accessible. Les releases restent téléchargeables.',
+      'La cause du rendu CPU est identifiée et corrigée : Classic a désormais un backend D3D12, et DirectML choisit l’adaptateur au plus de VRAM dédiée. Le développement reste suspendu tant que ces corrections n’ont pas été revalidées sur la RTX 4070 de référence. Les releases restent téléchargeables.',
   },
 ] as const;

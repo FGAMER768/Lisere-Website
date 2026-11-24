@@ -248,10 +248,12 @@ const formatRows = formats.map((row) => ({ label: row.label, value: row.value })
       </div>
 
       <p class="features-section__note">
-        DirectML est utilisé quand un adaptateur DirectX 12 est disponible. Sinon,
-        le repli CPU prend le relais et la note du moteur indique lequel est actif.
-        RIFE est limité au ×2 ; BasicVSR++ et la restauration de visages ne sont
-        pas intégrés.
+        DirectML retient l’adaptateur DirectX 12 qui possède le plus de VRAM
+        dédiée, et Lisere Classic applique le même choix en D3D12. La note du
+        moteur nomme le GPU réellement utilisé ou la raison du repli CPU ;
+        <code>LISERE_CLASSIC_GPU</code> et <code>LISERE_DML_ADAPTER</code> forcent
+        un adaptateur. RIFE est limité au ×2 ; BasicVSR++ et la restauration de
+        visages ne sont pas intégrés.
       </p>
     </div>
   </section>

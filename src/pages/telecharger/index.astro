@@ -86,9 +86,9 @@ const formatRows = formats.map((row) => ({ label: row.label, value: row.value })
     <div class="container">
       <DownloadTicket />
       <StatusNote label="Développement en pause" class="download-status">
-        La version {release.version} reste téléchargeable. Les essais 4K sont
-        suspendus faute de GPU exploitable, et aucune amélioration de performance
-        n’est promise dans l’immédiat.
+        La version {release.version} reste téléchargeable. Le backend D3D12 de
+        Classic et la sélection du GPU dédié restent à revalider sur la RTX 4070 ;
+        aucune amélioration de performance n’est promise avant cette validation.
       </StatusNote>
     </div>
   </section>

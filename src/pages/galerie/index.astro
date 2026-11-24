@@ -45,7 +45,7 @@ const gallerySchema = {
 >
   <PageHero
     title="Comparatifs avant/après"
-    lead="Chaque image indique sa source, son réglage et son moteur. Le comparatif principal montre un détail à 100 % ; les cartes illustrées sont montrées en entier."
+    lead="Chaque image indique sa source, son réglage et son moteur. Le comparatif du lac Hooker ajoute une rangée de détail à 100 % ; les cartes illustrées sont montrées en entier."
     breadcrumbs={breadcrumbs}
   >
     <ButtonLink href="/telecharger/" icon="download">Télécharger Liseré</ButtonLink>
@@ -57,11 +57,7 @@ const gallerySchema = {
   <section class="gallery-feature" aria-labelledby="comparatif-principal">
     <div class="container">
       <div class="gallery-feature__compare">
-        <h2 id="comparatif-principal" class="visually-hidden">Comparatif principal</h2>
-        <p class="gallery-feature__meta">
-          Lac Hooker · source 640 × 427 · sortie 2 560 × 1 708 · bicubique ×4 à
-          gauche, Real-ESRGAN ×4 à droite
-        </p>
+        <h2 id="comparatif-principal" class="gallery-feature__title">Lac Hooker, mont Cook</h2>
         <BeforeAfter
           before={before}
           after={after}
@@ -70,28 +66,25 @@ const gallerySchema = {
           initial={50}
           eager
         />
+        <dl class="compare-key">
+          <div>
+            <dt>Image de départ</dt>
+            <dd>Bicubique ×4, depuis 640 × 427</dd>
+          </div>
+          <div>
+            <dt>Rendu Liseré</dt>
+            <dd>Real-ESRGAN ×4, sortie 2 560 × 1 708</dd>
+          </div>
+        </dl>
+        <p class="gallery-feature__hint">
+          Faites glisser le séparateur ou déplacez-le avec les flèches du clavier.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="gallery-reading" aria-label="Comment lire les comparatifs">
-    <div class="container gallery-reading__grid">
-      <div class="gallery-reading__item">
-        <h2>De gauche à droite</h2>
-        <p>L’image de départ est à gauche, le rendu Liseré à droite. Le séparateur se déplace au clavier avec les flèches.</p>
-      </div>
-      <div class="gallery-reading__item">
-        <h2>Le détail à 100 %</h2>
-        <p>Les comparatifs complets incluent une rangée de détail à l’échelle réelle, où le bruit reste visible.</p>
-      </div>
-      <div class="gallery-reading__item">
-        <h2>Les réglages restent visibles</h2>
-        <p>Chaque légende donne la source, la taille de sortie et le moteur utilisé. Les crédits pointent vers l’image d’origine.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="gallery-grid container" aria-label="Comparatifs de la galerie">
+  <section class="gallery-grid container" aria-labelledby="galerie-titre">
+    <h2 id="galerie-titre" class="visually-hidden">Comparatifs de la galerie</h2>
     {galleryItems.map((item, index) => (
       <GalleryItem item={item} wide={index === 0} />
     ))}
@@ -120,7 +113,7 @@ const gallerySchema = {
 
   <CtaBand
     title="À vous de regarder de plus près"
-    lead="La version 1.3.0 est disponible pour Windows 10 et 11. Vous pouvez aussi lire le code et les tests avant de l’installer."
+    lead="La version 1.4.0 est disponible pour Windows 10 et 11. Vous pouvez aussi lire le code et les tests avant de l’installer."
   >
     <ButtonLink href="/telecharger/" icon="download">Télécharger</ButtonLink>
     <ButtonLink href="/code-source/" variant="secondary" icon="code">

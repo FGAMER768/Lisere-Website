@@ -13,6 +13,7 @@ export const imagePoints = [
   'Zoom synchronisé et déplacement dans l’image agrandie.',
   'Renforcement des visages YuNet, sans ajouter de grain au fond.',
   'Preset complet en JSON : curseurs, colorimétrie, moteur et visages.',
+  'Choix Aucun (sans moteur) : le redimensionnement, la colorimétrie et l’export continuent de fonctionner.',
 ] as const;
 
 export const videoPoints = [
@@ -22,6 +23,7 @@ export const videoPoints = [
   'Résolution source, 2×, 4×, 1080p ou 2160p. Cadence source, 30, 60 ou 120 i/s.',
   'Interpolation RIFE ×2, désentrelacement bwdif et stabilisation vidstab.',
   'File d’attente séquentielle : chaque job garde ses réglages, un échec n’arrête pas les suivants.',
+  'Export du preset vidéo complet : six réglages, colorimétrie et moteur dans un seul JSON.',
 ] as const;
 
 export const presets = [
@@ -85,12 +87,19 @@ export const engines = [
   {
     name: 'Lisere Classic',
     kind: 'Pipeline local',
-    description: 'Filtres déterministes, sans modèle neuronal. Le rendu de référence de l’application.',
+    description:
+      'Filtres déterministes, sans modèle neuronal. Le pipeline tourne en compute D3D12 sur le GPU dédié, avec un repli CPU exact.',
+  },
+  {
+    name: 'Aucun',
+    kind: 'Sans moteur',
+    description:
+      'Ni modèle ni pipeline. Le redimensionnement, la colorimétrie et l’export continuent de fonctionner.',
   },
   {
     name: 'Real-ESRGAN ×4',
     kind: 'ONNX',
-    description: 'Super-résolution générale, exécutée sur DirectML quand un adaptateur DirectX 12 est disponible.',
+    description: 'Super-résolution générale, exécutée sur DirectML avec l’adaptateur au plus de VRAM dédiée.',
   },
   {
     name: 'Anime 6B ×4',
@@ -151,10 +160,12 @@ export const architecture = [
   },
 ] as const;
 
-export const testTotals = [
-  { value: '486', label: 'tests' },
-  { value: '125', label: 'Core' },
-  { value: '27', label: 'Ai' },
-  { value: '57', label: 'Vidéo' },
-  { value: '277', label: 'App' },
-] as const;
+export const testSuite = {
+  total: 499,
+  projects: [
+    { name: 'App', tests: 280 },
+    { name: 'Core', tests: 125 },
+    { name: 'Vidéo', tests: 57 },
+    { name: 'Ai', tests: 37 },
+  ],
+} as const;
