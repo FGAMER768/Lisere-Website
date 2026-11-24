@@ -20,20 +20,28 @@
 }
 
 .film-strip__frame {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  aspect-ratio: 1.45;
   border-radius: 2px;
   background: var(--night-soft);
 }
 
-.film-strip__frame img {
+.film-strip__image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--night-soft);
+}
+
+.film-strip__image img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.film-strip__frame::after {
+.film-strip__image::after {
   position: absolute;
   inset: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -42,15 +50,11 @@
 }
 
 .film-strip__time {
-  position: absolute;
-  bottom: 0.35rem;
-  left: 0.35rem;
-  padding: 0.1rem 0.25rem;
-  border-radius: 2px;
+  padding: 0.2rem 0.3rem 0.3rem;
   background: var(--night);
-  color: var(--white);
+  color: var(--night-muted);
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.5625rem;
   line-height: 1.4;
   font-variant-numeric: tabular-nums;
 }

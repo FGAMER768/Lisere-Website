@@ -4,12 +4,11 @@ import { Image } from 'astro:assets';
 import './FilmStrip.css';
 
 interface Props {
-  image: ImageMetadata;
+  images: ImageMetadata[];
   alt: string;
 }
 
-const { image, alt } = Astro.props;
-const positions = [0, 18, 38, 58, 78, 100];
+const { images, alt } = Astro.props;
 const timecodes = ['00:00', '00:04', '00:08', '00:12', '00:16', '00:20'];
 ---
 
@@ -17,17 +16,20 @@ const timecodes = ['00:00', '00:04', '00:08', '00:12', '00:16', '00:20'];
   <div class="film-strip__viewport">
     <div class="film-strip__track">
       {
-        positions.map((position, index) => (
+        images.map((image, index) => (
           <div class="film-strip__frame">
-            <Image
-              src={image}
-              alt={index === 0 ? alt : ''}
-              widths={[320, 480]}
-              sizes="(min-width: 900px) 16vw, 190px"
-              loading="eager"
-              decoding="async"
-              style={`object-position:${position}% center`}
-            />
+            <div class="film-strip__image">
+              <Image
+                src={image}
+                alt={index === 0 ? alt : ''}
+                widths={[180, 240, 360, 480, 720]}
+                sizes="(min-width: 900px) 7vw, 90px"
+                format="webp"
+                quality={80}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <span class="film-strip__time">{timecodes[index]}</span>
           </div>
         ))

@@ -10,12 +10,18 @@ import LocalDiagram from '../components/LocalDiagram.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { imagePoints, videoPoints } from '../data/features';
 import { release, site } from '../data/site';
-import after from '../assets/images/hero/after.jpg';
 import detailBefore from '../assets/images/hero/detail-before.jpg';
 import detailAfter from '../assets/images/hero/detail-after.jpg';
+import frame01 from '../assets/images/video/frame-01.jpg';
+import frame02 from '../assets/images/video/frame-02.jpg';
+import frame03 from '../assets/images/video/frame-03.jpg';
+import frame04 from '../assets/images/video/frame-04.jpg';
+import frame05 from '../assets/images/video/frame-05.jpg';
+import frame06 from '../assets/images/video/frame-06.jpg';
 import '../styles/pages/home.css';
 
 const base = Astro.site ?? new URL('https://lisere.pages.dev');
+const timelineFrames = [frame01, frame02, frame03, frame04, frame05, frame06];
 
 const softwareSchema = {
   '@type': 'SoftwareApplication',
@@ -206,11 +212,11 @@ const specPoints = [
           <div class="video-panel">
             <div class="video-panel__bar">
               <span>Timeline</span>
-              <span>lac-hooker.mp4 · 00:20</span>
+              <span>hello-neighbor-3.mp4 · 00:20</span>
             </div>
             <FilmStrip
-              image={after}
-              alt="Vignette du comparatif du lac Hooker utilisée pour illustrer la timeline."
+              images={timelineFrames}
+              alt="Vignettes de la timeline du clip Hello Neighbor 3, de « There’s Iris » à « Neighbor and the Guest »."
             />
             <div class="video-panel__controls" aria-hidden="true">
               <span class="video-panel__play"></span>
