@@ -7,7 +7,7 @@ export const faqs = [
   {
     question: 'Faut-il un GPU pour lancer Liseré ?',
     answer:
-      'Non. Lisere Classic exécute son pipeline en compute D3D12 sur le GPU dédié quand il est disponible, avec un repli CPU exact. Les moteurs ONNX utilisent DirectML sur l’adaptateur DXGI qui possède le plus de VRAM dédiée, avec un repli CPU dont la raison est affichée dans la note du moteur. Le repli CPU est plus lent. Les essais 4K restent à revalider sur la RTX 4070 de référence.',
+      'Non. Lisere Classic exécute son pipeline en compute D3D12 sur le GPU dédié quand il est disponible, avec un repli CPU exact. Les moteurs ONNX utilisent DirectML sur l’adaptateur DXGI qui possède le plus de VRAM dédiée, avec un repli CPU dont la raison est affichée dans la note du moteur. Le repli CPU est plus lent. La revalidation complète sur la RTX 4070 de référence reste ouverte.',
   },
   {
     question: 'Pourquoi Windows affiche-t-il un avertissement ?',
@@ -20,8 +20,8 @@ export const faqs = [
       'Oui pour les presets vidéo JSON. Liseré transpose les réglages qu’il comprend et exporte aussi un preset vidéo complet : six réglages, colorimétrie et moteur dans un seul fichier. Aucun poids propriétaire n’est lu et le rendu utilise le moteur choisi dans Liseré.',
   },
   {
-    question: 'Pourquoi le développement est-il en pause ?',
+    question: 'L’encodage vidéo utilise-t-il le GPU ?',
     answer:
-      'La cause du rendu CPU est identifiée et corrigée : Classic a désormais un backend D3D12, et DirectML choisit l’adaptateur au plus de VRAM dédiée. Le développement reste suspendu tant que ces corrections n’ont pas été revalidées sur la RTX 4070 de référence. Les releases restent téléchargeables.',
+      'Oui quand un encodeur matériel répond : NVENC d’abord, Quick Sync ensuite, après une sonde qui réalise un vrai encodage et un vrai décodage. L’encodeur CPU n’est retenu que si vous le choisissez ou si aucun encodeur matériel n’est disponible : il n’y a pas de bascule silencieuse vers x264.',
   },
 ] as const;

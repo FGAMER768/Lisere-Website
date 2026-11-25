@@ -21,6 +21,7 @@ export const videoPoints = [
   'Timeline, transport clavier et aperçu sur la frame choisie.',
   'Lecture temps réel avec saut des frames quand le moteur ne suit pas.',
   'Résolution source, 2×, 4×, 1080p ou 2160p. Cadence source, 30, 60 ou 120 i/s.',
+  'Encodage et décodage matériel quand la sonde en trouve : NVENC d’abord, Quick Sync ensuite.',
   'Interpolation RIFE ×2, désentrelacement bwdif et stabilisation vidstab.',
   'File d’attente séquentielle : chaque job garde ses réglages, un échec n’arrête pas les suivants.',
   'Export du preset vidéo complet : six réglages, colorimétrie et moteur dans un seul JSON.',
@@ -88,7 +89,7 @@ export const engines = [
     name: 'Lisere Classic',
     kind: 'Pipeline local',
     description:
-      'Filtres déterministes, sans modèle neuronal. Le pipeline tourne en compute D3D12 sur le GPU dédié, avec un repli CPU exact.',
+      'Filtres déterministes, sans modèle neuronal. Amélioration, redimensionnement, grain et étalonnage tournent en compute D3D12 sur le GPU dédié, avec un repli CPU exact.',
   },
   {
     name: 'Aucun',
@@ -161,11 +162,11 @@ export const architecture = [
 ] as const;
 
 export const testSuite = {
-  total: 499,
+  total: 561,
   projects: [
     { name: 'App', tests: 280 },
-    { name: 'Core', tests: 125 },
-    { name: 'Vidéo', tests: 57 },
-    { name: 'Ai', tests: 37 },
+    { name: 'Core', tests: 140 },
+    { name: 'Vidéo', tests: 94 },
+    { name: 'Ai', tests: 47 },
   ],
 } as const;

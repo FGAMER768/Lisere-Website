@@ -150,7 +150,7 @@ const formatRows = formats.map((row) => ({ label: row.label, value: row.value })
       <dl class="video-facts">
         <div class="video-fact">
           <dt>Résolution</dt>
-          <dd>Source, 2×, 4×, 1080p ou 2160p.</dd>
+          <dd>Source, 2×, 4×, 1080p, 2160p ou une hauteur personnalisée.</dd>
         </div>
         <div class="video-fact">
           <dt>Cadence</dt>
@@ -162,7 +162,11 @@ const formatRows = formats.map((row) => ({ label: row.label, value: row.value })
         </div>
         <div class="video-fact">
           <dt>Sortie</dt>
-          <dd>MP4 H.264 ou H.265, audio AAC. Progression réelle et annulation.</dd>
+          <dd>
+            MP4 H.264 ou H.265, audio AAC. Encodage matériel NVENC ou Quick Sync
+            quand la sonde en trouve un, sinon l’encodeur CPU choisi. Progression
+            réelle et annulation.
+          </dd>
         </div>
         <div class="video-fact">
           <dt>TikTok</dt>

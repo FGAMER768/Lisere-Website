@@ -33,7 +33,7 @@ Le projet demande Node.js 22 LTS ou plus récent.
 | `/` | Accueil, comparateur principal et promesse produit |
 | `/fonctionnalites/` | Image, vidéo, préréglages, moteurs, formats et traitement local |
 | `/galerie/` | Comparatifs commentés et crédits |
-| `/telecharger/` | Version 1.4.0, installateur, empreinte SHA-256 et installation |
+| `/telecharger/` | Version 1.5.5, installateur, empreinte SHA-256 et installation |
 | `/code-source/` | Dépôt GitHub, architecture, tests et limites de licence |
 
 Les URL sont générées en dossiers avec slash final (`/galerie/`, pas `/galerie.html`). `trailingSlash: 'always'` et `build.format: 'directory'` sont réglés dans `astro.config.mjs`.
@@ -96,6 +96,10 @@ Le comparateur utilise le même cadrage pour les deux images. Si les dimensions 
 | `src/assets/images/gallery/anime-noise.jpg` | cartes de bruit temporel |
 
 Fournissez des images d’au moins **1600 px de large** ; Astro génère les variantes WebP et AVIF. Les ratios peuvent différer d’une image à l’autre, la galerie respecte le ratio natif.
+
+### Comparatif à cinq chaînes
+
+Les dix-huit fichiers de `src/assets/images/video-chains/` suivent le motif `<plan>-<chaîne>.jpg` : plans `05` (armure), `08` (gros plan), `10` (portrait), chaînes `source`, `ultron-ae`, `lisere`, `lisere-ultron`, `topaz` et `topaz-ultron`. Les fichiers font 960 × 960, Astro produit les variantes AVIF, WebP et JPEG aux largeurs 420, 640 et 960. Libellés, notes et plans sont dans `src/data/videoChains.ts`.
 
 Après remplacement :
 
@@ -233,4 +237,4 @@ Le dépôt produit **n’a pas de licence globale**. Le site dit donc « code pu
 
 Les modèles ONNX, FFmpeg, RIFE, YuNet et les noms de presets cités gardent leurs conditions d’origine. Aucun fichier propriétaire Topaz ou After Effects n’est distribué.
 
-Le développement de Liseré est en pause en attendant la revalidation du backend D3D12 sur un GPU dédié ; la version 1.4.0 reste téléchargeable. Les textes du site reflètent cet état.
+Le rendu GPU est livré dans les versions 1.5.x ; la revalidation complète sur la RTX 4070 de référence reste ouverte. Les textes du site reflètent cet état.

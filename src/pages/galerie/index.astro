@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BeforeAfter from '../../components/BeforeAfter.astro';
+import ChainCompare from '../../components/ChainCompare.astro';
 import ButtonLink from '../../components/ButtonLink.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import GalleryItem from '../../components/GalleryItem.astro';
@@ -45,7 +46,7 @@ const gallerySchema = {
 >
   <PageHero
     title="Comparatifs avant/après"
-    lead="Chaque image indique sa source, son réglage et son moteur. Le comparatif du lac Hooker ajoute une rangée de détail à 100 % ; les cartes illustrées sont montrées en entier."
+    lead="Chaque image indique sa source, son réglage et son moteur. Un comparateur à cinq chaînes met le même photogramme 4K face à After Effects et Topaz. Le comparatif du lac Hooker ajoute une rangée de détail à 100 % ; les cartes illustrées sont montrées en entier."
     breadcrumbs={breadcrumbs}
   >
     <ButtonLink href="/telecharger/" icon="download">Télécharger Liseré</ButtonLink>
@@ -83,6 +84,21 @@ const gallerySchema = {
     </div>
   </section>
 
+  <section class="chains-block" aria-labelledby="chaines-titre">
+    <div class="container chains-block__inner">
+      <ChainCompare>
+        <Fragment slot="intro">
+          <h2 id="chaines-titre">Le même plan, cinq chaînes</h2>
+          <p class="chains-block__lead">
+            Trois photogrammes 4K du même clip, chacun passé dans cinq chaînes :
+            l’étalonnage Ultron CC seul sous After Effects, l’IA de Liseré, puis les deux
+            chaînes complètes face à Topaz. À gauche la source, à droite la chaîne choisie.
+          </p>
+        </Fragment>
+      </ChainCompare>
+    </div>
+  </section>
+
   <section class="gallery-grid container" aria-labelledby="galerie-titre">
     <h2 id="galerie-titre" class="visually-hidden">Comparatifs de la galerie</h2>
     {galleryItems.map((item, index) => (
@@ -94,9 +110,11 @@ const gallerySchema = {
     <div class="container gallery-credits__inner">
       <h2 id="credits-titre">Crédits des images</h2>
       <p>
-        Les images de cette galerie sont créditées à leurs auteurs. Aucune image
-        de test propriétaire n’est présentée comme une démonstration de Liseré.
-        Les noms Topaz et After Effects appartiennent à leurs détenteurs.
+        Les images de cette galerie sont créditées à leurs auteurs. Les photogrammes
+        Iron Man du comparatif à cinq chaînes sont des images propriétaires de
+        Marvel Studios, montrées à titre illustratif ; Liseré ne distribue ni ces
+        fichiers de travail ni les rendus des autres applications. Les noms Topaz
+        et After Effects appartiennent à leurs détenteurs.
       </p>
       <div class="gallery-credits__links">
         <a href="https://altphotos.com/photo/hooker-lake-at-the-bottom-of-mount-cook-new-zealand-1747/">
@@ -113,7 +131,7 @@ const gallerySchema = {
 
   <CtaBand
     title="À vous de regarder de plus près"
-    lead="La version 1.4.0 est disponible pour Windows 10 et 11. Vous pouvez aussi lire le code et les tests avant de l’installer."
+    lead="La version 1.5.5 est disponible pour Windows 10 et 11. Vous pouvez aussi lire le code et les tests avant de l’installer."
   >
     <ButtonLink href="/telecharger/" icon="download">Télécharger</ButtonLink>
     <ButtonLink href="/code-source/" variant="secondary" icon="code">

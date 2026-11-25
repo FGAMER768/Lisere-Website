@@ -85,10 +85,10 @@ const formatRows = formats.map((row) => ({ label: row.label, value: row.value })
   <section class="download-ticket-wrap" aria-label="Version à télécharger">
     <div class="container">
       <DownloadTicket />
-      <StatusNote label="Développement en pause" class="download-status">
-        La version {release.version} reste téléchargeable. Le backend D3D12 de
-        Classic et la sélection du GPU dédié restent à revalider sur la RTX 4070 ;
-        aucune amélioration de performance n’est promise avant cette validation.
+      <StatusNote label="Rendu GPU" class="download-status">
+        La version {release.version} calcule l’amélioration, le grain et l’étalonnage
+        en D3D12 sur le GPU dédié, et encode en matériel quand la sonde en trouve un.
+        La revalidation complète sur la RTX 4070 de référence reste ouverte.
       </StatusNote>
     </div>
   </section>

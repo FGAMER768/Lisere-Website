@@ -41,6 +41,28 @@
   line-height: 1.5;
 }
 
+.chains-block {
+  padding-block: clamp(1.75rem, 2.5vw, 2.5rem);
+  background: var(--night);
+  color: var(--night-text);
+}
+
+.chains-block__inner {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+.chains-block h2 {
+  font-size: var(--text-xl);
+}
+
+.chains-block__lead {
+  max-width: 64ch;
+  color: var(--night-muted);
+  font-size: var(--text-md);
+  line-height: 1.6;
+}
+
 .gallery-grid {
   display: grid;
   max-width: 900px;

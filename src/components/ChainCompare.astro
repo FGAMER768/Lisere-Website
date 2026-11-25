@@ -1,0 +1,132 @@
+---
+import { chains, defaultChain, plans } from '../data/videoChains';
+import ChainImage from './ChainImage.astro';
+import './ChainCompare.css';
+
+const initial = 50;
+const activePlan = plans[0];
+const activeChain = chains.find((chain) => chain.id === defaultChain) ?? chains[0];
+const noteOf = (label: string, note: string) => `${label} · ${note}`;
+---
+
+<div
+  class="chains"
+  data-chains
+  data-plan={activePlan.id}
+  data-chain={activeChain.id}
+  style={`--compare-position:${initial}%`}
+>
+  <div class="chains__intro">
+    <slot name="intro" />
+
+    <div class="chains__groups">
+      <fieldset class="chains__group">
+        <legend class="chains__legend">Plan</legend>
+        <div class="chains__chips">
+          {
+            plans.map((plan) => (
+              <label class="chains__chip">
+                <input
+                  type="radio"
+                  name="chains-plan"
+                  value={plan.id}
+                  checked={plan.id === activePlan.id}
+                  data-plan-pick
+                />
+                {plan.label}
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <fieldset class="chains__group">
+        <legend class="chains__legend">Chaîne</legend>
+        <div class="chains__chips">
+          {
+            chains.map((chain) => (
+              <label class="chains__chip">
+                <input
+                  type="radio"
+                  name="chains-chain"
+                  value={chain.id}
+                  checked={chain.id === activeChain.id}
+                  data-label={chain.label}
+                  data-note={noteOf(chain.label, chain.note)}
+                  data-chain-pick
+                />
+                {chain.label}
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <figure class="chains__figure">
+    <div class="chains__frame">
+      <div class="chains__base" data-slot="source">
+        <ChainImage src={activePlan.source} alt={`${activePlan.alt}. Source non traitée.`} />
+      </div>
+
+      <div class="chains__top" data-slot="render">
+        <ChainImage
+          src={activePlan.renders[activeChain.id]}
+          alt={`${activePlan.alt}. Rendu ${activeChain.label}.`}
+        />
+      </div>
+
+      <span class="chains__label chains__label--before">Source</span>
+      <span class="chains__label chains__label--after" data-chain-label>{activeChain.label}</span>
+
+      <div class="chains__divider" aria-hidden="true">
+        <span class="chains__handle"></span>
+      </div>
+
+      <input
+        class="chains__range"
+        type="range"
+        min="0"
+        max="100"
+        step="1"
+        value={initial}
+        aria-label={`Comparer la source et ${activeChain.label}`}
+        aria-valuetext={`${initial} % du rendu`}
+        data-chains-range
+      />
+    </div>
+
+    <figcaption class="chains__caption">
+      <p class="chains__note">
+        <span>Photogramme 4K, 3 840 × 3 840, réduit à 960 × 960 pour la page.</span>
+        <span data-chain-note>{noteOf(activeChain.label, activeChain.note)}</span>
+      </p>
+      <p class="chains__hint">Faites glisser le séparateur</p>
+    </figcaption>
+  </figure>
+
+  <div hidden>
+    {
+      plans.map((plan) => (
+        <>
+          <template data-tpl={`${plan.id}:source`}>
+            <ChainImage src={plan.source} alt={`${plan.alt}. Source non traitée.`} />
+          </template>
+          {chains.map((chain) => (
+            <template data-tpl={`${plan.id}:${chain.id}`}>
+              <ChainImage
+                src={plan.renders[chain.id]}
+                alt={`${plan.alt}. Rendu ${chain.label}.`}
+              />
+            </template>
+          ))}
+        </>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import '../scripts/chains';
+</script>
