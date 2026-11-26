@@ -166,11 +166,11 @@ export const architecture = [
 ] as const;
 
 export const testSuite = {
-  total: 561,
+  total: 564,
   projects: [
     { name: 'App', tests: 280 },
     { name: 'Core', tests: 140 },
-    { name: 'Vidéo', tests: 94 },
-    { name: 'Ai', tests: 47 },
+    { name: 'Vidéo', tests: 98 },
+    { name: 'Ai', tests: 46 },
   ],
 } as const;
