@@ -92,35 +92,39 @@ export const engines = [
       'Filtres déterministes, sans modèle neuronal. Amélioration, redimensionnement, grain et étalonnage tournent en compute D3D12 sur le GPU dédié, avec un repli CPU exact.',
   },
   {
+    name: 'Super-Resolution CNN ×3',
+    kind: 'ONNX',
+    description:
+      'Super-résolution sous-pixel sur le plan de luminance, en tuiles de 224 px. Modèle ONNX local vérifié par SHA-256, exécuté sur DirectML avec repli CPU.',
+  },
+  {
+    name: 'Real-ESRGAN général ×4',
+    kind: 'ONNX',
+    description:
+      'Super-résolution générale en RVB : la couleur est reconstruite avec la netteté, sur des tuiles de taille libre, puis ramenée à la résolution de sortie choisie.',
+  },
+  {
+    name: 'Anime ×4 (Real-ESRGAN 6B)',
+    kind: 'ONNX',
+    description:
+      'Pour le dessin et l’animation : traits et aplats plus propres, mais plus lent que le modèle général. À éviter sur les photos.',
+  },
+  {
+    name: 'Anime vidéo ×4 (Real-ESRGAN v3)',
+    kind: 'ONNX',
+    description: 'Version rapide pour les frames d’animation, plus douce que le modèle image.',
+  },
+  {
+    name: 'Nettoyage photo 1×',
+    kind: 'ONNX',
+    description:
+      'Retire le bruit et une partie des artefacts JPEG sans changer la taille de l’image. Le plus lent des moteurs.',
+  },
+  {
     name: 'Aucun',
     kind: 'Sans moteur',
     description:
       'Ni modèle ni pipeline. Le redimensionnement, la colorimétrie et l’export continuent de fonctionner.',
-  },
-  {
-    name: 'Real-ESRGAN ×4',
-    kind: 'ONNX',
-    description: 'Super-résolution générale, exécutée sur DirectML avec l’adaptateur au plus de VRAM dédiée.',
-  },
-  {
-    name: 'Anime 6B ×4',
-    kind: 'ONNX',
-    description: 'Pour le dessin et l’animation. Lisse les aplats et les traits, avec un rendu plus doux.',
-  },
-  {
-    name: 'AnimeVideo v3 ×4',
-    kind: 'ONNX',
-    description: 'Pour l’animation. Garde davantage de grain et de micro-texture que Anime 6B.',
-  },
-  {
-    name: 'RIFE 4.9 ×2',
-    kind: 'ONNX',
-    description: 'Interpolation entre deux images. Limité au ×2.',
-  },
-  {
-    name: 'YuNet',
-    kind: 'ONNX',
-    description: 'Détection des visages pour concentrer le renforcement sur la peau.',
   },
 ] as const;
 
