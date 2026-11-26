@@ -18,12 +18,12 @@ export const site = {
 } as const;
 
 export const release = {
-  version: '1.6.1',
+  version: '1.6.2',
   date: '26 novembre 2026',
   installerSize: '211,3 Mo',
   zipSize: '208,7 Mo',
-  installerHash: '222a7a87090199816f7016149c73899bb39aabada50ab65dba7fbba75484bd1a',
-  zipHash: '256486e4dd34b8c387b6bc140c7fcc831652590d5a0c460bc1eee935d77fc261',
+  installerHash: 'a34b74c527fbf05e485cf40b247c7c849005ef645ac6c354ba7869bd8929dd44',
+  zipHash: '71291c3e3f2e0da3403cc0730b09fb1ca39eb74c2e42b922e681b0b8602523be',
 } as const;
 
 export const nav = [
