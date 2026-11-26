@@ -33,7 +33,7 @@ Le projet demande Node.js 22 LTS ou plus récent.
 | `/` | Accueil, comparateur principal et promesse produit |
 | `/fonctionnalites/` | Image, vidéo, préréglages, moteurs, formats et traitement local |
 | `/galerie/` | Comparatifs commentés et crédits |
-| `/telecharger/` | Version 1.5.5, installateur, empreinte SHA-256 et installation |
+| `/telecharger/` | Version 1.6.0, installateur, empreintes SHA-256 et installation |
 | `/code-source/` | Dépôt GitHub, architecture, tests et limites de licence |
 
 Les URL sont générées en dossiers avec slash final (`/galerie/`, pas `/galerie.html`). `trailingSlash: 'always'` et `build.format: 'directory'` sont réglés dans `astro.config.mjs`.

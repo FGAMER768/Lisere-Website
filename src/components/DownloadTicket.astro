@@ -41,7 +41,8 @@ import './DownloadTicket.css';
       </div>
     </dl>
 
-    <CopyHash hash={release.installerHash} />
+    <CopyHash hash={release.installerHash} label="Empreinte SHA-256 · installateur" />
+    <CopyHash hash={release.zipHash} label="Empreinte SHA-256 · Lisere.zip" />
     <p class="download-ticket__links">
       <a href={site.installerChecksum}>Empreinte seule</a>
       <span aria-hidden="true">/</span>
