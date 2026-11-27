@@ -28,3 +28,40 @@ const { items } = Astro.props;
     ))
   }
 </div>
+
+<script>
+  const ease = 'cubic-bezier(0.23, 1, 0.32, 1)';
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLDetailsElement>('.faq-list__item').forEach((details) => {
+    const summary = details.querySelector('summary');
+    const body = details.querySelector<HTMLElement>('.faq-list__body');
+    if (!summary || !body) return;
+
+    let busy = false;
+
+    summary.addEventListener('click', async (event) => {
+      if (reducedMotion.matches) return;
+      event.preventDefault();
+      if (busy) return;
+      busy = true;
+
+      const opened = details.open;
+      if (!opened) details.open = true;
+      body.style.overflow = 'hidden';
+      const from = opened ? `${body.offsetHeight}px` : '0px';
+      const to = opened ? '0px' : `${body.offsetHeight}px`;
+      const animation = body.animate([{ height: from }, { height: to }], {
+        duration: 200,
+        easing: ease,
+        fill: 'both',
+      });
+
+      await animation.finished.catch(() => {});
+      body.getAnimations().forEach((running) => running.cancel());
+      body.style.overflow = '';
+      details.open = !opened;
+      busy = false;
+    });
+  });
+</script>

@@ -97,6 +97,10 @@
   font-size: var(--text-sm);
   font-weight: 500;
   list-style: none;
+  transition:
+    border-color var(--duration-1) ease,
+    background-color var(--duration-1) ease,
+    transform var(--duration-1) var(--ease-out);
 }
 
 .site-header__menu::-webkit-details-marker {
@@ -112,6 +116,7 @@
   position: absolute;
   top: calc(100% + 0.75rem);
   right: 0;
+  transform-origin: top right;
   width: min(22rem, calc(100vw - 2.5rem));
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -159,6 +164,16 @@
 .site-header summary,
 .site-header button {
   -webkit-tap-highlight-color: transparent;
+}
+
+.site-header__menu:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__menu:active {
+    transform: none;
+  }
 }
 
 @media (min-width: 960px) {
